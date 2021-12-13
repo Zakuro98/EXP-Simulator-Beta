@@ -1669,7 +1669,7 @@ function regenerate_ui() {
         document.getElementById("cap_100").style.display = "inline"
         document.getElementById("dis_input").min = 0
     } else {
-        document.getElementById("cap_100").style.display = "inline"
+        document.getElementById("cap_100").style.display = "none"
     }
 
     if (game.perks[7]) {
