@@ -1312,18 +1312,20 @@ function tick() {
             else if (game.pp_bought[26] || game.perks[5]) oc_cycle += 180
             else oc_cycle += 360
 
-            if (
-                game.autopr_mode === 0 ||
-                game.autopr_mode === 1 ||
-                !game.autopr_toggle
-            ) {
+            if (game.autopr_mode === 0 || !game.autopr_toggle) {
                 if (game.oc_state === 2 && game.oc_time === 1) {
                     game.smartds_oc = true
                 }
             }
             if (game.autopr_mode === 2) {
-                if (game.oc_state === 2 && game.oc_time === 1) {
-                    game.smartds_oc = true
+                game.smartds_oc = true
+
+                if (game.perks[14]) {
+                    if (game.smartpr_pp < oc_cycle) {
+                        game.smartds_oc = true
+                    } else {
+                        game.smartds_oc = false
+                    }
                 }
             }
             if (game.autopr_mode === 3) {
@@ -1333,7 +1335,7 @@ function tick() {
                     game.smartds_oc = false
                 }
             }
-            if (game.autopr_mode === 4) {
+            if (game.autopr_mode === 1 || game.autopr_mode === 4) {
                 game.smartds_oc = false
             }
 
