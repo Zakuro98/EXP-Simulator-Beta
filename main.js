@@ -2190,6 +2190,8 @@ let amp_tick_loop = window.setInterval(function () {
     amp_tick()
 }, 100)
 
+goto_tab(0)
+
 //load the game when opened
 load(JSON.parse(localStorage.getItem("exp_simulator_beta_save")))
 
