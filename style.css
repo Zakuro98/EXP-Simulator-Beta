@@ -1125,6 +1125,10 @@ main {
     font-weight: bold;
 }
 
+#achievements_page {
+    display: none;
+}
+
 .achievement_title {
     color: white;
     font-size: 1em;
