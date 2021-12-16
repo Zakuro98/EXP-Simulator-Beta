@@ -53,7 +53,6 @@ function reset() {
     game.afk_time = 0
 
     color_update()
-    click_update()
 
     document.getElementById("lvlnum").innerText = game.level
     document.getElementById("exp").innerText =
@@ -61,76 +60,6 @@ function reset() {
     document.getElementById("total_exp").innerText =
         format_num(game.total_exp) + " Total EXP"
 
-    document.getElementById("boost").innerText =
-        "EXP Boost\nTier " +
-        format_num(game.boost_tier + game.starter_kit + game.generator_kit) +
-        ": +" +
-        format_num(game.exp_add) +
-        " EXP/click"
-    document.getElementById("boost_button").innerText = "UPGRADE!"
-    document.getElementById("auto").innerText =
-        "Autoclicker\nTier " +
-        format_num(game.auto_tier + game.starter_kit + game.generator_kit) +
-        ": " +
-        format_num(game.cps) +
-        " clicks/s"
-    document.getElementById("auto_button").innerText = "UPGRADE!"
-    document.getElementById("fluct").innerText =
-        "EXP Fluctuation\nTier " +
-        format_num(game.fluct_tier + game.starter_kit + game.generator_kit) +
-        ": +" +
-        format_num(game.exp_fluct) +
-        " max extra EXP/click"
-    document.getElementById("fluct_button").innerText = "UPGRADE!"
-    document.getElementById("fact").innerText =
-        "EXP Factor\nTier " +
-        format_num(game.fluct_tier + game.starter_kit + game.generator_kit) +
-        ": " +
-        format_num(game.exp_fact) +
-        "x EXP/click"
-    document.getElementById("fact_button").innerText = "UPGRADE!"
-    document.getElementById("flux").innerText =
-        "EXP Flux\nTier " +
-        format_num(game.flux_tier + game.starter_kit + game.generator_kit) +
-        ": " +
-        format_eff(game.exp_flux) +
-        "x EXP/click (+" +
-        format_eff(
-            (game.flux_tier + game.starter_kit + game.generator_kit) *
-                0.15 *
-                game.flux_boost *
-                game.flux_increase
-        ) +
-        "/min)"
-    document.getElementById("flux_button").innerText = "UPGRADE!"
-    if (game.battery_mode === 0)
-        document.getElementById("battery").innerText =
-            "EXP Battery\nTier " +
-            format_num(
-                game.battery_tier + game.starter_kit + game.generator_kit
-            ) +
-            ": " +
-            format_num(game.exp_battery) +
-            "x manual EXP production"
-    else if (game.battery_mode === 1)
-        document.getElementById("battery").innerText =
-            "EXP Battery\nTier " +
-            format_num(
-                game.battery_tier + game.starter_kit + game.generator_kit
-            ) +
-            ": " +
-            format_num(game.exp_battery) +
-            "x automated EXP production"
-    if (game.perks[8])
-        document.getElementById("battery").innerText =
-            "EXP Battery\nTier " +
-            format_num(
-                game.battery_tier + game.starter_kit + game.generator_kit
-            ) +
-            ": " +
-            format_num(game.exp_battery) +
-            "x EXP production"
-    document.getElementById("battery_button").innerText = "UPGRADE!"
     document.getElementById("progress").style.width = 0 + "%"
 }
 
@@ -200,17 +129,14 @@ function prestige() {
                 game.exp_battery =
                     (1 + game.starter_kit + game.generator_kit) * 9
         }
-        click_update()
         game.cps = (game.starter_kit + game.generator_kit) * 2
 
         if (game.pp_bought[27]) {
             game.prestige_power = 1 + (game.prestige / 1000) ** (1 / 2)
-            click_update()
         }
 
         if (game.pp_bought[30]) {
             game.depth_power = 1 + game.highest_level / 400
-            click_update()
         }
 
         if (game.perks[6]) {
@@ -238,83 +164,6 @@ function prestige() {
             game.smartpr_time = 0
             autopr_switch(4)
         }
-
-        document.getElementById("boost").innerText =
-            "EXP Boost\nTier " +
-            format_num(
-                game.boost_tier + game.starter_kit + game.generator_kit
-            ) +
-            ": +" +
-            format_num(game.exp_add) +
-            " EXP/click"
-        document.getElementById("boost_button").innerText = "UPGRADE!"
-        document.getElementById("auto").innerText =
-            "Autoclicker\nTier " +
-            format_num(game.auto_tier + game.starter_kit + game.generator_kit) +
-            ": " +
-            format_num(game.cps) +
-            " clicks/s"
-        document.getElementById("auto_button").innerText = "UPGRADE!"
-        document.getElementById("fluct").innerText =
-            "EXP Fluctuation\nTier " +
-            format_num(
-                game.fluct_tier + game.starter_kit + game.generator_kit
-            ) +
-            ": +" +
-            format_num(game.exp_fluct) +
-            " max extra EXP/click"
-        document.getElementById("fluct_button").innerText = "UPGRADE!"
-        document.getElementById("fact").innerText =
-            "EXP Factor\nTier " +
-            format_num(
-                game.fluct_tier + game.starter_kit + game.generator_kit
-            ) +
-            ": " +
-            format_num(game.exp_fact) +
-            "x EXP/click"
-        document.getElementById("fact_button").innerText = "UPGRADE!"
-        document.getElementById("flux").innerText =
-            "EXP Flux\nTier " +
-            format_num(game.flux_tier + game.starter_kit + game.generator_kit) +
-            ": " +
-            format_eff(game.exp_flux) +
-            "x EXP/click (+" +
-            format_eff(
-                (game.flux_tier + game.starter_kit + game.generator_kit) *
-                    0.15 *
-                    game.flux_boost *
-                    game.flux_increase
-            ) +
-            "/min)"
-        document.getElementById("flux_button").innerText = "UPGRADE!"
-        if (game.battery_mode === 0)
-            document.getElementById("battery").innerText =
-                "EXP Battery\nTier " +
-                format_num(
-                    game.battery_tier + game.starter_kit + game.generator_kit
-                ) +
-                ": " +
-                format_num(game.exp_battery) +
-                "x manual EXP production"
-        else if (game.battery_mode === 1)
-            document.getElementById("battery").innerText =
-                "EXP Battery\nTier " +
-                format_num(
-                    game.battery_tier + game.starter_kit + game.generator_kit
-                ) +
-                ": " +
-                format_num(game.exp_battery) +
-                "x automated EXP production"
-        if (game.perks[8])
-            document.getElementById("battery").innerText =
-                "EXP Battery\nTier " +
-                format_num(
-                    game.battery_tier + game.starter_kit + game.generator_kit
-                ) +
-                ": " +
-                format_num(game.exp_battery) +
-                "x EXP production"
-        document.getElementById("battery_button").innerText = "UPGRADE!"
 
         switch (game.jumpstart) {
             case 1:
@@ -382,8 +231,6 @@ function respec() {
 
         prestige()
         game.pp = game.total_pp
-        click_update()
-        upgrade_update()
         ampbutton_update()
     }
 }
@@ -534,7 +381,7 @@ function reboot() {
             if (game.perks[3]) game.flux_boost = 5
 
             if (game.perks[1]) {
-                game.generator_kit = 20
+                game.generator_kit = 12
                 game.exp_add = game.generator_kit * game.watt_boost
                 game.cps = game.generator_kit
             } else game.generator_kit = 0
@@ -545,7 +392,7 @@ function reboot() {
             if (game.perks[11])
                 document.getElementById("cap_auto").style.display = "inline"
 
-            if (game.perks[12]) game.generator_kit = 40
+            if (game.perks[12]) game.generator_kit = 24
 
             if (game.perks[14]) {
                 document.getElementById("smart_config").style.display = "block"
@@ -562,71 +409,6 @@ function reboot() {
             ampbutton_update()
             document.getElementById("click").innerText =
                 "+" + format_num(game.amp) + " EXP"
-
-            document.getElementById("boost").innerText =
-                "EXP Boost\nTier " +
-                format_num(game.boost_tier + game.generator_kit) +
-                ": +" +
-                format_num(game.exp_add) +
-                " EXP/click"
-            document.getElementById("boost_button").innerText = "UPGRADE!"
-            document.getElementById("auto").innerText =
-                "Autoclicker\nTier " +
-                format_num(game.auto_tier + game.generator_kit) +
-                ": " +
-                format_num(game.cps) +
-                " clicks/s"
-            document.getElementById("auto_button").innerText = "UPGRADE!"
-            document.getElementById("fluct").innerText =
-                "EXP Fluctuation\nTier " +
-                format_num(game.fluct_tier + game.generator_kit) +
-                ": +" +
-                format_num(game.exp_fluct) +
-                " max extra EXP/click"
-            document.getElementById("fluct_button").innerText = "UPGRADE!"
-            document.getElementById("fact").innerText =
-                "EXP Factor\nTier " +
-                format_num(game.fluct_tier + game.generator_kit) +
-                ": " +
-                format_num(game.exp_fact) +
-                "x EXP/click"
-            document.getElementById("fact_button").innerText = "UPGRADE!"
-            document.getElementById("flux").innerText =
-                "EXP Flux\nTier " +
-                format_num(game.flux_tier + game.generator_kit) +
-                ": " +
-                format_eff(game.exp_flux) +
-                "x EXP/click (+" +
-                format_eff(
-                    (game.flux_tier + game.generator_kit) *
-                        0.15 *
-                        game.flux_boost *
-                        game.flux_increase
-                ) +
-                "/min)"
-            document.getElementById("flux_button").innerText = "UPGRADE!"
-            if (game.battery_mode === 0)
-                document.getElementById("battery").innerText =
-                    "EXP Battery\nTier " +
-                    format_num(game.battery_tier + game.generator_kit) +
-                    ": " +
-                    format_num(game.exp_battery) +
-                    "x manual EXP production"
-            else if (game.battery_mode === 1)
-                document.getElementById("battery").innerText =
-                    "EXP Battery\nTier " +
-                    format_num(game.battery_tier + game.generator_kit) +
-                    ": " +
-                    format_num(game.exp_battery) +
-                    "x automated EXP production"
-            if (game.perks[8])
-                document.getElementById("battery").innerText =
-                    "EXP Battery\nTier " +
-                    format_num(game.battery_tier + game.generator_kit) +
-                    ": " +
-                    format_num(game.exp_battery) +
-                    "x EXP production"
-            document.getElementById("battery_button").innerText = "UPGRADE!"
 
             document.getElementById("boost_auto").style.display = "none"
             document.getElementById("auto_auto").style.display = "none"
