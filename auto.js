@@ -221,153 +221,11 @@ function initial_switch(mode) {
 function battery_toggle() {
     if (game.battery_mode === 0) {
         game.battery_mode = 1
-        click_update()
-        document.getElementById("boost").innerText =
-            "EXP Boost\nTier " +
-            format_num(
-                game.boost_tier + game.starter_kit + game.generator_kit
-            ) +
-            ": +" +
-            format_num(
-                Math.round(
-                    game.exp_add *
-                        game.global_multiplier *
-                        game.exp_battery *
-                        game.cap_boost
-                )
-            ) +
-            " EXP/click"
-        if (
-            (game.autods_toggle === 1 && game.autods_goal === 0) ||
-            (game.autods_toggle === 2 &&
-                game.cap_mode === 4 &&
-                !game.smartds_oc)
-        )
-            document.getElementById("boost").innerText =
-                "EXP Boost\nTier " +
-                format_num(
-                    game.boost_tier + game.starter_kit + game.generator_kit
-                ) +
-                ": +" +
-                format_num(
-                    Math.round(
-                        game.exp_add *
-                            game.global_multiplier *
-                            game.exp_battery *
-                            (game.cap_boost +
-                                (1 - game.cap_boost) * game.cap_mode * 2)
-                    )
-                ) +
-                " EXP/click"
-        document.getElementById("fluct").innerText =
-            "EXP Fluctuation\nTier " +
-            format_num(
-                game.fluct_tier + game.starter_kit + game.generator_kit
-            ) +
-            ": +" +
-            format_num(
-                Math.round(
-                    game.exp_fluct *
-                        game.global_multiplier *
-                        game.exp_battery *
-                        game.cap_boost
-                )
-            ) +
-            " max extra EXP/click"
-        if (
-            (game.autods_toggle === 1 && game.autods_goal === 0) ||
-            (game.autods_toggle === 2 &&
-                game.cap_mode === 4 &&
-                !game.smartds_oc)
-        )
-            document.getElementById("fluct").innerText =
-                "EXP Fluctuation\nTier " +
-                format_num(
-                    game.fluct_tier + game.starter_kit + game.generator_kit
-                ) +
-                ": +" +
-                format_num(
-                    Math.round(
-                        game.exp_fluct *
-                            game.global_multiplier *
-                            game.exp_battery *
-                            (game.cap_boost +
-                                (1 - game.cap_boost) * game.cap_mode * 2)
-                    )
-                ) +
-                " max extra EXP/click"
         document.getElementById("battery_mode").innerText = "IDLE"
         document.getElementById("battery_mode").style.color = "#00ffff"
     } else {
         game.battery_mode = 0
-        click_update()
         document.getElementById("battery_mode").innerText = "ACTIVE"
-        document.getElementById("boost").innerText =
-            "EXP Boost\nTier " +
-            format_num(
-                game.boost_tier + game.starter_kit + game.generator_kit
-            ) +
-            ": +" +
-            format_num(
-                Math.round(
-                    game.exp_add * game.global_multiplier * game.cap_boost
-                )
-            ) +
-            " EXP/click"
-        if (
-            (game.autods_toggle === 1 && game.autods_goal === 0) ||
-            (game.autods_toggle === 2 &&
-                game.cap_mode === 4 &&
-                !game.smartds_oc)
-        )
-            document.getElementById("boost").innerText =
-                "EXP Boost\nTier " +
-                format_num(
-                    game.boost_tier + game.starter_kit + game.generator_kit
-                ) +
-                ": +" +
-                format_num(
-                    Math.round(
-                        game.exp_add *
-                            game.global_multiplier *
-                            (game.cap_boost +
-                                (1 - game.cap_boost) * game.cap_mode * 2)
-                    )
-                ) +
-                " EXP/click"
-        document.getElementById("fluct").innerText =
-            "EXP Fluctuation\nTier " +
-            format_num(
-                game.fluct_tier + game.starter_kit + game.generator_kit
-            ) +
-            ": +" +
-            format_num(
-                Math.round(
-                    game.exp_fluct * game.global_multiplier * game.cap_boost
-                )
-            ) +
-            " max extra EXP/click"
-        if (
-            (game.autods_toggle === 1 && game.autods_goal === 0) ||
-            (game.autods_toggle === 2 &&
-                game.cap_mode === 4 &&
-                !game.smartds_oc)
-        )
-            document.getElementById("fluct").innerText =
-                "EXP Fluctuation\nTier " +
-                format_num(
-                    game.fluct_tier + game.starter_kit + game.generator_kit
-                ) +
-                ": +" +
-                format_num(
-                    Math.round(
-                        game.exp_fluct *
-                            game.global_multiplier *
-                            (game.cap_boost +
-                                (1 - game.cap_boost) * game.cap_mode * 2)
-                    )
-                ) +
-                " max extra EXP/click"
         document.getElementById("battery_mode").style.color = "#ff0000"
     }
 }
@@ -447,7 +305,9 @@ function toggle_all_automation() {
         game.autopr_toggle ||
         game.autooc_toggle ||
         game.autods_toggle >= 1 ||
-        game.autopp_toggle
+        game.autopp_toggle ||
+        game.autocp_toggle ||
+        game.autorb_toggle
     )
         all_off = false
 
@@ -459,6 +319,8 @@ function toggle_all_automation() {
         game.autooc_toggle = true
         game.autods_toggle = 1
         game.autopp_toggle = true
+        game.autocp_toggle = true
+        game.autorb_toggle = true
     } else {
         for (let i = 0; i < 6; i++) {
             game.autoup_toggle[i] = false
@@ -467,6 +329,8 @@ function toggle_all_automation() {
         game.autooc_toggle = false
         game.autods_toggle = 0
         game.autopp_toggle = false
+        game.autocp_toggle = false
+        game.autorb_toggle = false
     }
 
     for (let i = 0; i < 6; i++) {
@@ -479,8 +343,13 @@ function toggle_all_automation() {
     oc_toggle()
     ds_toggle()
     ds_toggle()
+    if (game.perks[11]) ds_toggle()
     pp_toggle()
     pp_toggle()
+    cp_toggle()
+    cp_toggle()
+    rb_toggle()
+    rb_toggle()
     battery_toggle()
     battery_toggle()
 }
