@@ -1231,7 +1231,7 @@ function tick() {
             "\n\n\nEXP Simulator v?.?.???\nMade by Zakuro"
     } else {
         document.getElementById("version").innerText =
-            "\n\n\nEXP Simulator v2.2.101\nMade by Zakuro"
+            "\n\n\nEXP Simulator v2.2.101 (Beta)\nMade by Zakuro"
     }
 
     //calculating total multiplier
