@@ -163,7 +163,7 @@ let game = {
     cancer_reboots: 0,
 
     //v2.2.102 variables
-    beta: false,
+    beta: true,
 }
 
 //initialize maps
