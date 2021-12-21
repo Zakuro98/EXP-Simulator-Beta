@@ -1495,7 +1495,7 @@ function load(savegame) {
         game.autorb_goal = 1
         game.autorb_pending = false
         game.cancer_reboots = 0
-        game.beta = false
+        game.beta = true
         //v2.1.403
         if (minor < 405) {
             game.hold_time = 0
@@ -1578,7 +1578,7 @@ function load(savegame) {
         game.version = "2.2.102"
         //v2.2.100
         if (minor < 102) {
-            game.beta = false
+            game.beta = true
         }
         //v2.2.000
         if (minor < 100) {
