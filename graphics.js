@@ -166,11 +166,6 @@ function ampbutton_update() {
 //updating whether or not upgrades are visible
 //and updating the button text/color
 function upgrade_update() {
-    let starter_str = ""
-    if (game.starter_kit + game.generator_kit > 0)
-        starter_str =
-            " (+" + format_num(game.starter_kit + game.generator_kit) + ")"
-
     //exp boost
     document.getElementById("boost").style.display = "block"
     document.getElementById("boost_button").style.display = "inline"
@@ -203,7 +198,6 @@ function upgrade_update() {
             format_num(
                 game.boost_tier + game.starter_kit + game.generator_kit
             ) +
-            starter_str +
             ": +" +
             format_num(
                 Math.round(
@@ -225,7 +219,6 @@ function upgrade_update() {
                 format_num(
                     game.boost_tier + game.starter_kit + game.generator_kit
                 ) +
-                starter_str +
                 ": +" +
                 format_num(
                     Math.round(
@@ -243,7 +236,6 @@ function upgrade_update() {
             format_num(
                 game.boost_tier + game.starter_kit + game.generator_kit
             ) +
-            starter_str +
             ": +" +
             format_num(
                 Math.round(
@@ -262,7 +254,6 @@ function upgrade_update() {
                 format_num(
                     game.boost_tier + game.starter_kit + game.generator_kit
                 ) +
-                starter_str +
                 ": +" +
                 format_num(
                     Math.round(
@@ -304,7 +295,6 @@ function upgrade_update() {
     document.getElementById("auto").innerText =
         "Autoclicker\nTier " +
         format_num(game.auto_tier + game.starter_kit + game.generator_kit) +
-        starter_str +
         ": " +
         format_num(game.cps) +
         " clicks/s"
@@ -343,7 +333,6 @@ function upgrade_update() {
             format_num(
                 game.fluct_tier + game.starter_kit + game.generator_kit
             ) +
-            starter_str +
             ": +" +
             format_num(
                 Math.round(
@@ -360,7 +349,6 @@ function upgrade_update() {
                 format_num(
                     game.fluct_tier + game.starter_kit + game.generator_kit
                 ) +
-                starter_str +
                 ": +" +
                 format_num(
                     Math.round(
@@ -378,7 +366,6 @@ function upgrade_update() {
             format_num(
                 game.fluct_tier + game.starter_kit + game.generator_kit
             ) +
-            starter_str +
             ": +" +
             format_num(
                 Math.round(
@@ -392,7 +379,6 @@ function upgrade_update() {
                 format_num(
                     game.fluct_tier + game.starter_kit + game.generator_kit
                 ) +
-                starter_str +
                 ": +" +
                 format_num(
                     Math.round(
@@ -436,7 +422,6 @@ function upgrade_update() {
     document.getElementById("fact").innerText =
         "EXP Factor\nTier " +
         format_num(game.fact_tier + game.starter_kit + game.generator_kit) +
-        starter_str +
         ": " +
         format_num(game.exp_fact) +
         "x EXP/click"
@@ -472,7 +457,6 @@ function upgrade_update() {
     document.getElementById("flux").innerText =
         "EXP Flux\nTier " +
         format_num(game.flux_tier + game.starter_kit + game.generator_kit) +
-        starter_str +
         ": " +
         format_eff(game.exp_flux) +
         "x EXP/click (+" +
@@ -518,7 +502,6 @@ function upgrade_update() {
             format_num(
                 game.battery_tier + game.starter_kit + game.generator_kit
             ) +
-            starter_str +
             ": " +
             format_num(game.exp_battery) +
             "x manual EXP production"
@@ -528,7 +511,6 @@ function upgrade_update() {
             format_num(
                 game.battery_tier + game.starter_kit + game.generator_kit
             ) +
-            starter_str +
             ": " +
             format_num(game.exp_battery) +
             "x automated EXP production"
@@ -539,10 +521,19 @@ function upgrade_update() {
             format_num(
                 game.battery_tier + game.starter_kit + game.generator_kit
             ) +
-            starter_str +
             ": " +
             format_num(game.exp_battery) +
             "x EXP production"
+    }
+
+    if (game.starter_kit + game.generator_kit > 0) {
+        document.getElementById("starter_kit").style.display = "block"
+        document.getElementById("starter_kit").innerText =
+            "+" +
+            format_num(game.starter_kit + game.generator_kit) +
+            " free tiers from Starter Kit"
+    } else {
+        document.getElementById("starter_kit").style.display = "none"
     }
 }
 
