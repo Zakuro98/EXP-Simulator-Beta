@@ -1,6 +1,6 @@
 //initializing game variables
 let game = {
-    version: "2.2.100",
+    version: "2.2.102",
 
     //v2.0.000 variables
     total_exp: 0,
@@ -161,6 +161,9 @@ let game = {
     autorb_pending: false,
 
     cancer_reboots: 0,
+
+    //v2.2.102 variables
+    beta: false,
 }
 
 //initialize maps
@@ -729,7 +732,7 @@ function get_watts(pp) {
     if (pp < 200000) {
         return 0
     } else {
-        return Math.floor(((pp - 150000) / 50000) ** 1.125)
+        return Math.floor(((pp - 184000) / 16000) ** 0.75)
     }
 }
 
