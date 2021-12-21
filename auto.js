@@ -189,6 +189,8 @@ function pendingrb_toggle() {
 function smart_toggle() {
     if (!game.smartpr_toggle) {
         game.smartpr_toggle = true
+        if (game.smartpr_mode === 0) autopr_switch(4)
+        else if (game.smartpr_mode === 1) autopr_switch(2)
         document.getElementById("smart_toggle").innerText = "ENABLED"
         document.getElementById("smart_toggle").style.color = "#00ff00"
     } else {
@@ -307,7 +309,8 @@ function toggle_all_automation() {
         game.autods_toggle >= 1 ||
         game.autopp_toggle ||
         game.autocp_toggle ||
-        game.autorb_toggle
+        game.autorb_toggle ||
+        game.smartpr_toggle
     )
         all_off = false
 
@@ -321,6 +324,7 @@ function toggle_all_automation() {
         game.autopp_toggle = true
         game.autocp_toggle = true
         game.autorb_toggle = true
+        game.smartpr_toggle = true
     } else {
         for (let i = 0; i < 6; i++) {
             game.autoup_toggle[i] = false
@@ -331,6 +335,7 @@ function toggle_all_automation() {
         game.autopp_toggle = false
         game.autocp_toggle = false
         game.autorb_toggle = false
+        game.smartpr_toggle = false
     }
 
     for (let i = 0; i < 6; i++) {
@@ -339,6 +344,8 @@ function toggle_all_automation() {
     }
     pr_toggle()
     pr_toggle()
+    smart_toggle()
+    smart_toggle()
     oc_toggle()
     oc_toggle()
     ds_toggle()
