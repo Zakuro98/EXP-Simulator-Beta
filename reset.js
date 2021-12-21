@@ -300,8 +300,12 @@ function reboot() {
             game.reboot += 1
             if (!game.perks[13]) game.watts += 1
             else game.watts += get_watts(game.pp)
-            game.watt_boost =
-                ((game.watts + 1) * (game.watts + 2) * (game.watts + 3)) / 6
+            if (game.watts < 96)
+                game.watt_boost =
+                    ((game.watts + 1) * (game.watts + 2) * (game.watts + 3)) / 6
+            else
+                game.watt_boost =
+                    ((game.watts + 4755) * (game.watts + 4756)) / 2 - 11611677
 
             watts_update()
 
@@ -398,8 +402,10 @@ function reboot() {
                 document.getElementById("smart_config").style.display = "block"
                 game.smartpr_mode = game.smartpr_start
                 game.smartpr_time = 0
-                if (game.smartpr_mode === 0) autopr_switch(4)
-                else if (game.smartpr_mode === 1) autopr_switch(2)
+                if (game.smartpr_toggle) {
+                    if (game.smartpr_mode === 0) autopr_switch(4)
+                    else if (game.smartpr_mode === 1) autopr_switch(2)
+                }
             }
 
             if (game.perks[15]) {
