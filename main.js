@@ -1185,9 +1185,12 @@ function tick() {
         if (game.autoup_toggle[i]) game.no_automation = false
     }
     if (game.autopr_toggle) game.no_automation = false
+    if (game.smartpr_toggle) game.no_automation = false
     if (game.autooc_toggle) game.no_automation = false
     if (game.autods_toggle >= 1) game.no_automation = false
     if (game.autopp_toggle) game.no_automation = false
+    if (game.autocp_toggle) game.no_automation = false
+    if (game.autorb_toggle) game.no_automation = false
 
     //as we can see you can't
     if (game.notation !== 8) game.blind = false
@@ -1231,7 +1234,7 @@ function tick() {
             "\n\n\nEXP Simulator v?.?.???\nMade by Zakuro"
     } else {
         document.getElementById("version").innerText =
-            "\n\n\nEXP Simulator v2.2.101 (Beta)\nMade by Zakuro"
+            "\n\n\nEXP Simulator v2.2.102 (Beta)\nMade by Zakuro"
     }
 
     //calculating total multiplier
@@ -1389,7 +1392,7 @@ function pre_save() {
 //saving the game
 function save() {
     pre_save()
-    localStorage.setItem("exp_simulator_beta_save", JSON.stringify(game))
+    localStorage.setItem("exp_simulator_save", JSON.stringify(game))
 }
 
 //exporting a save file
@@ -1443,7 +1446,7 @@ function load(savegame) {
         }
         //v2.1.405
         game = savegame
-        game.version = "2.2.100"
+        game.version = "2.2.102"
         if (game.tab > 2) game.tab += 2
         game.reboot = 0
         game.watts = 0
@@ -1492,6 +1495,7 @@ function load(savegame) {
         game.autorb_goal = 1
         game.autorb_pending = false
         game.cancer_reboots = 0
+        game.beta = false
         //v2.1.403
         if (minor < 405) {
             game.hold_time = 0
@@ -1569,9 +1573,13 @@ function load(savegame) {
             game.pp_hide = false
         }
     } else {
-        //v2.2.100
+        //v2.2.102
         game = savegame
-        game.version = "2.2.100"
+        game.version = "2.2.102"
+        //v2.2.100
+        if (minor < 102) {
+            game.beta = false
+        }
         //v2.2.000
         if (minor < 100) {
             let old_perks = game.perks
@@ -1859,7 +1867,7 @@ let amp_tick_loop = window.setInterval(function () {
 goto_tab(0)
 
 //load the game when opened
-load(JSON.parse(localStorage.getItem("exp_simulator_beta_save")))
+load(JSON.parse(localStorage.getItem("exp_simulator_save")))
 
 //setting up the autosave loop
 let save_loop = window.setInterval(function () {
