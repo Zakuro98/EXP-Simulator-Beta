@@ -1392,6 +1392,7 @@ function pre_save() {
 //saving the game
 function save() {
     pre_save()
+    game.beta = true
     localStorage.setItem("exp_simulator_beta_save", JSON.stringify(game))
 }
 
