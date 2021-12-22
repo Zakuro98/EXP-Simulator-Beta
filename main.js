@@ -1116,7 +1116,7 @@ function tick() {
         if (
             game.autorb_pending &&
             game.pp + get_pp(game.level) - get_pp(game.highest_level) >=
-                Math.ceil(50000 * game.autorb_goal ** (8 / 9) + 150000)
+                Math.ceil(15000 * game.autorb_goal ** (20 / 17) + 185000)
         ) {
             prestige()
         }
@@ -1234,7 +1234,7 @@ function tick() {
             "\n\n\nEXP Simulator v?.?.???\nMade by Zakuro"
     } else {
         document.getElementById("version").innerText =
-            "\n\n\nEXP Simulator v2.2.102 (Beta)\nMade by Zakuro"
+            "\n\n\nEXP Simulator v2.2.103 (Beta)\nMade by Zakuro"
     }
 
     //calculating total multiplier
