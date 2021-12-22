@@ -668,7 +668,7 @@ function watts_update() {
     } else {
         document.getElementById("spare_pp_req").innerText =
             format_num(
-                Math.ceil(50000 * (get_watts(game.pp) + 1) ** (8 / 9) + 150000)
+                Math.ceil(15000 * (get_watts(game.pp) + 1) ** (20 / 17) + 185000)
             ) + " spare PP"
     }
 
