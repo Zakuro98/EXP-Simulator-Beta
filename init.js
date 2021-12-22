@@ -732,7 +732,7 @@ function get_watts(pp) {
     if (pp < 200000) {
         return 0
     } else {
-        return Math.floor(((pp - 184000) / 16000) ** 0.75)
+        return Math.floor(((pp - 185000) / 15000) ** 0.85)
     }
 }
 
