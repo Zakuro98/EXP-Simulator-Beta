@@ -77,10 +77,14 @@ function pr_toggle() {
         game.autopr_toggle = true
         document.getElementById("amp_auto").innerText = "ON"
         document.getElementById("amp_auto").style.color = "#00ff00"
+        document.getElementById("auto_toggle").innerText = "ENABLED"
+        document.getElementById("auto_toggle").style.color = "#00ff00"
     } else {
         game.autopr_toggle = false
         document.getElementById("amp_auto").innerText = "OFF"
         document.getElementById("amp_auto").style.color = "#ff0000"
+        document.getElementById("auto_toggle").innerText = "DISABLED"
+        document.getElementById("auto_toggle").style.color = "#ff0000"
     }
 }
 
@@ -109,8 +113,13 @@ function ds_toggle() {
         case 0:
             document.getElementById("dis_auto").innerText = "OFF"
             document.getElementById("dis_auto").style.color = "#ff0000"
-            document.getElementById("dis_text").style.display = "block"
-            document.getElementById("dis_input").style.display = "block"
+            if (
+                (game.pp_bought[32] && game.perks[9]) ||
+                (game.pp_bought[35] && !game.perks[9])
+            ) {
+                document.getElementById("dis_text").style.display = "block"
+                document.getElementById("dis_input").style.display = "block"
+            }
             break
         case 1:
             document.getElementById("dis_auto").innerText = "ON"
@@ -160,16 +169,39 @@ function rb_toggle() {
     if (!game.confirmation) {
         if (!game.autorb_toggle) {
             game.autorb_toggle = true
+            document.getElementById("watt_auto").innerText = "ON"
+            document.getElementById("watt_auto").style.color = "#00ff00"
             document.getElementById("autorb_toggle").innerText = "ENABLED"
             document.getElementById("autorb_toggle").style.color = "#00ff00"
         } else {
             game.autorb_toggle = false
+            document.getElementById("watt_auto").innerText = "OFF"
+            document.getElementById("watt_auto").style.color = "#ff0000"
             document.getElementById("autorb_toggle").innerText = "DISABLED"
             document.getElementById("autorb_toggle").style.color = "#ff0000"
         }
     } else {
         alert(
             "Reboot Confirmation must be turned off to enable Reboot automation"
+        )
+    }
+}
+
+//quantize automation toggle
+function qu_toggle() {
+    if (!game.quantum_confirmation) {
+        if (!game.autoqu_toggle) {
+            game.autoqu_toggle = true
+            document.getElementById("autoqu_toggle").innerText = "ENABLED"
+            document.getElementById("autoqu_toggle").style.color = "#00ff00"
+        } else {
+            game.autoqu_toggle = false
+            document.getElementById("autoqu_toggle").innerText = "DISABLED"
+            document.getElementById("autoqu_toggle").style.color = "#ff0000"
+        }
+    } else {
+        alert(
+            "Quantize Confirmation must be turned off to enable Quantize automation"
         )
     }
 }
@@ -216,6 +248,19 @@ function initial_switch(mode) {
             document.getElementById("smart_pp_mode").className =
                 "button mode_active"
             break
+    }
+}
+
+//reactor automation toggle
+function hy_toggle() {
+    if (!game.autohy_toggle) {
+        game.autohy_toggle = true
+        document.getElementById("autohy_toggle").innerText = "ENABLED"
+        document.getElementById("autohy_toggle").style.color = "#00ff00"
+    } else {
+        game.autohy_toggle = false
+        document.getElementById("autohy_toggle").innerText = "DISABLED"
+        document.getElementById("autohy_toggle").style.color = "#ff0000"
     }
 }
 
@@ -293,6 +338,54 @@ function pp_switch(mode) {
         case 2:
             document.getElementById("strict_mode").className =
                 "button mode_active"
+            break
+    }
+}
+
+//switching autoreboot modes
+function autorb_switch(mode) {
+    game.autorb_mode = mode
+
+    document.getElementById("auto_watts").style.display = "none"
+    document.getElementById("auto_time2").style.display = "none"
+
+    document.getElementById("watts_mode").className = "button"
+    document.getElementById("time_mode2").className = "button"
+
+    switch (mode) {
+        case 0:
+            document.getElementById("watts_mode").className =
+                "button mode_active"
+            document.getElementById("auto_watts").style.display = "block"
+            break
+        case 1:
+            document.getElementById("time_mode2").className =
+                "button mode_active"
+            document.getElementById("auto_time2").style.display = "block"
+            break
+    }
+}
+
+//switching autoquantize modes
+function autoqu_switch(mode) {
+    game.autoqu_mode = mode
+
+    document.getElementById("auto_photons").style.display = "none"
+    document.getElementById("auto_time3").style.display = "none"
+
+    document.getElementById("photons_mode").className = "button"
+    document.getElementById("time_mode3").className = "button"
+
+    switch (mode) {
+        case 0:
+            document.getElementById("photons_mode").className =
+                "button mode_active"
+            document.getElementById("auto_photons").style.display = "block"
+            break
+        case 1:
+            document.getElementById("time_mode3").className =
+                "button mode_active"
+            document.getElementById("auto_time3").style.display = "block"
             break
     }
 }
