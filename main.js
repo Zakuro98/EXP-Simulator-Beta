@@ -2347,7 +2347,7 @@ refresh()
 goto_tab(0)
 
 //load the game when opened
-load(JSON.parse(localStorage.getItem("exp_simulator_save")))
+load(JSON.parse(localStorage.getItem("exp_simulator_beta_save")))
 
 //setting up the autosave loop
 let save_loop = window.setInterval(function () {
