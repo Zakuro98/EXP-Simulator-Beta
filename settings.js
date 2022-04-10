@@ -1,6 +1,11 @@
 //notation switching
 function notation() {
-    game.notation += 1
+    if (
+        new Date().getUTCDate() !== 1 ||
+        new Date().getUTCMonth() !== 3 ||
+        !game.question
+    )
+        game.notation += 1
     if (game.notation >= 9) game.notation = 0
     pp_update()
     switch (game.notation) {
@@ -34,6 +39,8 @@ function notation() {
     }
     increment(0)
     watts_update()
+    challenge_update()
+    reactor_update()
     if (game.oc_state === 2)
         document.getElementById("oc_state").innerText =
             "Boosting " + format_num(game.exp_oc) + "x"
@@ -55,6 +62,20 @@ function notation() {
         "x)"
     pp_map.get(pp_upgrade.upgrades[30]).querySelector(".pp_desc").innerText =
         pp_upgrade.upgrades[30].desc
+}
+
+//switchpoint toggle
+function switchpoint() {
+    game.switchpoint += 1
+    if (game.switchpoint >= 2) game.switchpoint = 0
+    switch (game.switchpoint) {
+        case 0:
+            document.getElementById("switchpoint_button").innerText = "MILLION"
+            break
+        case 1:
+            document.getElementById("switchpoint_button").innerText = "BILLION"
+            break
+    }
 }
 
 //hotkeys toggle
@@ -119,6 +140,8 @@ function epilepsy() {
             "#780e74"
         )
         document.documentElement.style.setProperty("--button_color", "white")
+        document.documentElement.style.setProperty("--enter_color", "#ff2929")
+        document.documentElement.style.setProperty("--enter_shadow", "#ff0000")
     } else {
         game.epilepsy = true
         document.getElementById("epilepsy_button").innerText = "DISABLED"
@@ -127,6 +150,8 @@ function epilepsy() {
             "white"
         )
         document.documentElement.style.setProperty("--button_color", "black")
+        document.documentElement.style.setProperty("--enter_color", "white")
+        document.documentElement.style.setProperty("--enter_shadow", "white")
     }
 }
 
@@ -161,13 +186,83 @@ function confirmation() {
         game.autorb_toggle = false
         document.getElementById("autorb_toggle").innerText = "DISABLED"
         document.getElementById("autorb_toggle").style.color = "#ff0000"
+        document.getElementById("watt_auto").innerText = "OFF"
+        document.getElementById("watt_auto").style.color = "#ff0000"
         document.getElementById("confirm_button").innerText = "ENABLED"
+    }
+}
+
+//toggling challenge confirmation
+function challenge_confirmation() {
+    if (game.challenge_confirmation) {
+        game.challenge_confirmation = false
+        document.getElementById("ch_confirm_button").innerText = "DISABLED"
+    } else {
+        game.challenge_confirmation = true
+        document.getElementById("ch_confirm_button").innerText = "ENABLED"
+    }
+}
+
+//toggling quantize confirmation
+function quantum_confirmation() {
+    if (game.quantum_confirmation) {
+        game.quantum_confirmation = false
+        document.getElementById("qu_confirm_button").innerText = "DISABLED"
+    } else {
+        game.quantum_confirmation = true
+        game.autoqu_toggle = false
+        document.getElementById("autoqu_toggle").innerText = "DISABLED"
+        document.getElementById("autoqu_toggle").style.color = "#ff0000"
+        document.getElementById("qu_confirm_button").innerText = "ENABLED"
+    }
+}
+
+//??? toggle
+function question() {
+    if (game.question) {
+        game.question = false
+        document.getElementById("question_button").innerText = "DISABLED"
+    } else {
+        game.question = true
+        document.getElementById("question_button").innerText = "ENABLED"
+    }
+}
+
+//priority reset layer switching
+function priority_layer() {
+    game.priority_layer += 1
+    if (game.reboot >= 1 || game.quantum >= 1) {
+        if (game.priority_layer >= 3) game.priority_layer = 0
+    } else {
+        if (game.priority_layer >= 2) game.priority_layer = 0
+    }
+    switch (game.priority_layer) {
+        case 0:
+            document.getElementById("layer_button").innerText = "NONE"
+            break
+        case 1:
+            document.getElementById("layer_button").innerText = "PRESTIGE"
+            break
+        case 2:
+            document.getElementById("layer_button").innerText = "REBOOT"
+            break
+    }
+}
+
+//toggling hidden achievement hints
+function hints() {
+    if (game.hints) {
+        game.hints = false
+        document.getElementById("hints_button").innerText = "DISABLED"
+    } else {
+        game.hints = true
+        document.getElementById("hints_button").innerText = "ENABLED"
     }
 }
 
 //tab switching
 function goto_tab(id) {
-    if (id !== 5 && game.tab === 5) {
+    if (id !== 5 && game.tab === 6) {
         document.getElementById("achievements").style.color = "#ffffff"
         for (let i = 0; i < achievement.achievements.length; i++) {
             achievement.achievements[i].new = false
@@ -178,10 +273,21 @@ function goto_tab(id) {
 
     document.getElementById("upgrades_page").style.display = "none"
     document.getElementById("prestige_page").style.display = "none"
+    document.getElementById("p_upgrades_page").style.display = "none"
+    document.getElementById("p_config_page").style.display = "none"
     document.getElementById("reboot_page").style.display = "none"
+    document.getElementById("challenges_page").style.display = "none"
+    document.getElementById("reactor_page").style.display = "none"
+    document.getElementById("quantum_page").style.display = "none"
+    document.getElementById("prism_page").style.display = "none"
+    document.getElementById("gravity_page").style.display = "none"
     document.getElementById("statistics_page").style.display = "none"
     document.getElementById("achievements_page").style.display = "none"
     document.getElementById("settings_page").style.display = "none"
+
+    document.getElementById("prestige_tabs").style.display = "none"
+    document.getElementById("reboot_tabs").style.display = "none"
+    document.getElementById("quantum_tabs").style.display = "none"
 
     switch (id) {
         case 1:
@@ -189,20 +295,97 @@ function goto_tab(id) {
             break
         case 2:
             document.getElementById("prestige_page").style.display = "block"
+            if (game.subtab[0] === 0)
+                document.getElementById("p_upgrades_page").style.display =
+                    "block"
+            if (game.subtab[0] === 1)
+                document.getElementById("p_config_page").style.display = "block"
+            if (game.pp_bought[3])
+                document.getElementById("prestige_tabs").style.display = "flex"
             break
         case 3:
-            document.getElementById("reboot_page").style.display = "block"
+            if (game.subtab[1] === 0)
+                document.getElementById("reboot_page").style.display = "block"
+            if (game.subtab[1] === 1)
+                document.getElementById("challenges_page").style.display =
+                    "block"
+            if (game.subtab[1] === 2)
+                document.getElementById("reactor_page").style.display = "block"
+            if (game.perks[17])
+                document.getElementById("reboot_tabs").style.display = "flex"
             break
         case 4:
-            document.getElementById("statistics_page").style.display = "flex"
+            document.getElementById("quantum_page").style.display = "block"
+            if (game.subtab[2] === 0)
+                document.getElementById("prism_page").style.display = "block"
+            if (game.subtab[2] === 1)
+                document.getElementById("gravity_page").style.display = "block"
+            if (game.qu_bought[7])
+                document.getElementById("quantum_tabs").style.display = "flex"
             break
         case 5:
+            document.getElementById("statistics_page").style.display = "flex"
+            break
+        case 6:
             document.getElementById("achievements_page").style.display = "block"
             document.getElementById("achievements").style.color = "#ffffff"
             break
-        case 6:
+        case 7:
             document.getElementById("settings_page").style.display = "flex"
             break
+    }
+}
+
+//subtab switching
+function goto_subtab(id) {
+    if (game.tab === 2) {
+        game.subtab[0] = id
+
+        document.getElementById("p_upgrades_page").style.display = "none"
+        document.getElementById("p_config_page").style.display = "none"
+
+        switch (id) {
+            case 0:
+                document.getElementById("p_upgrades_page").style.display =
+                    "block"
+                break
+            case 1:
+                document.getElementById("p_config_page").style.display = "block"
+                break
+        }
+    } else if (game.tab === 3) {
+        game.subtab[1] = id
+
+        document.getElementById("reboot_page").style.display = "none"
+        document.getElementById("challenges_page").style.display = "none"
+        document.getElementById("reactor_page").style.display = "none"
+
+        switch (id) {
+            case 0:
+                document.getElementById("reboot_page").style.display = "block"
+                break
+            case 1:
+                document.getElementById("challenges_page").style.display =
+                    "block"
+                break
+            case 2:
+                document.getElementById("reactor_page").style.display = "block"
+                break
+        }
+    } else if (game.tab === 4) {
+        game.subtab[2] = id
+
+        document.getElementById("prism_page").style.display = "none"
+        document.getElementById("gravity_page").style.display = "none"
+
+        switch (id) {
+            case 0:
+                document.getElementById("prism_page").style.display = "block"
+                break
+            case 1:
+                document.getElementById("gravity_page").style.display = "block"
+                break
+        }
     }
 }
 
@@ -242,4 +425,137 @@ function change_page(dir) {
         "Page " + (game.achiev_page + 1)
     document.getElementById("page_text2").innerText =
         "Page " + (game.achiev_page + 1)
+}
+
+//toggling buy one/buy max
+function max_toggle() {
+    if (game.buy_max) {
+        game.buy_max = false
+        document.getElementById("reactor_buy_max").innerText = "BUY ONE"
+        document.getElementById("reactor_buy_max").style.color = "#4db2ff"
+        document.getElementById("reactor_buy_max").style.textShadow =
+            "0em 0em 0.2em #0091ff"
+    } else {
+        game.buy_max = true
+        document.getElementById("reactor_buy_max").innerText = "BUY MAX"
+        document.getElementById("reactor_buy_max").style.color = "#ffffff"
+        document.getElementById("reactor_buy_max").style.textShadow =
+            "0em 0em 0.2em #ffffff"
+    }
+}
+
+//buy max cores
+function max_all() {
+    let efficiency = new Array(8).fill(Infinity)
+    let selection = 0
+    for (let i = 0; i < 8; i++) {
+        if (i === 0) {
+            efficiency[i] =
+                game.core_price[i] /
+                ((game.core_level[i] + 1) / game.core_level[i] - 1)
+        } else {
+            efficiency[i] =
+                game.core_price[i] /
+                ((game.core_level[i] + 2) / (game.core_level[i] + 1) - 1)
+        }
+        if (
+            efficiency[i] < efficiency[selection] &&
+            game.hydrogen >= game.core_price[i]
+        )
+            selection = i
+    }
+    while (game.hydrogen >= game.core_price[selection]) {
+        game.hydrogen -= game.core_price[selection]
+        game.budget -= game.core_price[selection]
+        if (game.budget < 0) game.budget = 0
+        game.core_level[selection]++
+        if (game.core_level[selection] > Math.floor(500000 / 2 ** selection)) {
+            game.core_price[selection] +=
+                (core.cores[selection].base_price *
+                    (game.core_level[selection] -
+                        Math.floor(500000 / 2 ** selection)) **
+                        1) /
+                4
+        } else {
+            game.core_price[selection] += core.cores[selection].base_price / 4
+        }
+
+        selection = 0
+
+        for (let i = 0; i < 8; i++) {
+            if (i === 0) {
+                efficiency[i] =
+                    game.core_price[i] /
+                    ((game.core_level[i] + 1) / game.core_level[i] - 1)
+            } else {
+                efficiency[i] =
+                    game.core_price[i] /
+                    ((game.core_level[i] + 2) / (game.core_level[i] + 1) - 1)
+            }
+            if (
+                efficiency[i] < efficiency[selection] &&
+                game.hydrogen >= game.core_price[i]
+            )
+                selection = i
+        }
+    }
+}
+
+//buy max cores with half money
+function max_half() {
+    let efficiency = new Array(8).fill(Infinity)
+    let selection = 0
+    let budget = game.hydrogen / 2
+    for (let i = 0; i < 8; i++) {
+        if (i === 0) {
+            efficiency[i] =
+                game.core_price[i] /
+                ((game.core_level[i] + 1) / game.core_level[i] - 1)
+        } else {
+            efficiency[i] =
+                game.core_price[i] /
+                ((game.core_level[i] + 2) / (game.core_level[i] + 1) - 1)
+        }
+        if (
+            efficiency[i] < efficiency[selection] &&
+            game.hydrogen >= game.core_price[i]
+        )
+            selection = i
+    }
+    while (budget >= game.core_price[selection]) {
+        game.hydrogen -= game.core_price[selection]
+        budget -= game.core_price[selection]
+        game.budget -= game.core_price[selection]
+        if (game.budget < 0) game.budget = 0
+        game.core_level[selection]++
+        if (game.core_level[selection] > Math.floor(500000 / 2 ** selection)) {
+            game.core_price[selection] +=
+                (core.cores[selection].base_price *
+                    (game.core_level[selection] -
+                        Math.floor(500000 / 2 ** selection)) **
+                        1) /
+                4
+        } else {
+            game.core_price[selection] += core.cores[selection].base_price / 4
+        }
+
+        selection = 0
+
+        for (let i = 0; i < 8; i++) {
+            if (i === 0) {
+                efficiency[i] =
+                    game.core_price[i] /
+                    ((game.core_level[i] + 1) / game.core_level[i] - 1)
+            } else {
+                efficiency[i] =
+                    game.core_price[i] /
+                    ((game.core_level[i] + 2) / (game.core_level[i] + 1) - 1)
+            }
+            if (
+                efficiency[i] < efficiency[selection] &&
+                game.hydrogen >= game.core_price[i]
+            )
+                selection = i
+        }
+    }
 }
