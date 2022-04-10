@@ -1583,6 +1583,7 @@ function load(savegame) {
             return
         }
 
+        game = savegame
         //v2.1.000
         if (minor < 3) {
             game.pp_hide = false
@@ -1659,7 +1660,6 @@ function load(savegame) {
             game.mouse_held = false
         }
         //v2.1.405
-        game = savegame
         game.version = "2.3.100"
         if (game.tab > 2) game.tab += 2
         if (game.tab > 3) game.tab += 1
@@ -1770,6 +1770,7 @@ function load(savegame) {
         game.autoqu_mode = 0
         game.autoqu_goal = [1, 60]
     } else if (major < 3) {
+        game = savegame
         //v2.2.000
         if (minor < 100) {
             let old_perks = game.perks
@@ -1860,7 +1861,6 @@ function load(savegame) {
             game.switchpoint = 0
         }
         //v2.2.301
-        game = savegame
         game.version = "2.3.100"
         game.amp_eff = new Array(5).fill(-1)
         game.watts_eff = new Array(5).fill(-1)
@@ -1915,6 +1915,7 @@ function load(savegame) {
             )
             return
         }
+        game = savegame
         //v2.3.000
         if (minor < 2) {
             game.question = true
@@ -1945,7 +1946,6 @@ function load(savegame) {
             }
         }
         //v2.3.100
-        game = savegame
         game.version = "2.3.100"
     }
     regenerate_ui()
