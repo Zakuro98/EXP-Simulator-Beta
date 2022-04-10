@@ -43,7 +43,7 @@
                         <button id="click" onclick="player_increment()">
                             +1 EXP
                         </button>
-                        <div class="amp_area">
+                        <div id="amp_area" class="amp_area">
                             <button id="amp_button" class="button" onclick="prestige()">
                                 PRESTIGE!
                             </button>
@@ -57,6 +57,20 @@
                                 +1 PP
                             </p>
                         </div>
+                        <div id="reboot_area" class="reboot_area">
+                            <button id="watt_button" class="button no_reboot_power" onclick="reboot()">
+                                REBOOT!
+                            </button>
+                            <button id="watt_auto" class="button autoup" onclick="rb_toggle()">
+                                OFF
+                            </button>
+                            <p id="watts_up" class="uptext">
+                                +1 watt
+                            </p>
+                            <p id="hydrogen_up" class="uptext">
+                                +0.01 g hydrogen
+                            </p>
+                        </div>
                     </div>
                     <div class="resources">
                         <p id="total_exp">
@@ -68,28 +82,41 @@
                         <p id="pp">
                             0 PP
                         </p>
+                        <p id="watts2">
+                            0 watts
+                        </p>
+                        <p id="hydrogen3">
+                            0.00 g hydrogen
+                        </p>
                     </div>
                 </div>
 
-                <div class="menu">
-                    <button id="upgrades" class="tab" onclick="goto_tab(1)">
-                        UPGRADES
-                    </button>
-                    <button id="prestige" class="tab" onclick="goto_tab(2)">
-                        PRESTIGE
-                    </button>
-                    <button id="reboot" class="tab" onclick="goto_tab(3)">
-                        REBOOT
-                    </button>
-                    <button id="statistics" class="tab" onclick="goto_tab(4)">
-                        STATISTICS
-                    </button>
-                    <button id="achievements" class="tab" onclick="goto_tab(5)">
-                        ACHIEVEMENTS
-                    </button>
-                    <button id="settings" class="tab" onclick="goto_tab(6)">
-                        SETTINGS
-                    </button>
+                <div id="menu" class="menu">
+                    <div class="row">
+                        <button id="upgrades" class="tab" onclick="goto_tab(1)">
+                            UPGRADES
+                        </button>
+                        <button id="prestige" class="tab" onclick="goto_tab(2)">
+                            PRESTIGE
+                        </button>
+                        <button id="reboot" class="tab" onclick="goto_tab(3)">
+                            REBOOT
+                        </button>
+                        <button id="quantum" class="tab" onclick="goto_tab(4)">
+                            QUANTUM
+                        </button>
+                    </div>
+                    <div id="row2" class="row">
+                        <button id="statistics" class="tab" onclick="goto_tab(5)">
+                            STATISTICS
+                        </button>
+                        <button id="achievements" class="tab" onclick="goto_tab(6)">
+                            ACHIEVEMENTS
+                        </button>
+                        <button id="settings" class="tab" onclick="goto_tab(7)">
+                            SETTINGS
+                        </button>
+                    </div>
                 </div>
 
                 <div id="upgrades_page">
@@ -261,11 +288,94 @@
                     </div>
                 </div>
 
+                <div id="prestige_tabs" class="menu">
+                    <button id="p_upgrades_tab" class="button" onclick="goto_subtab(0)">
+                        UPGRADES
+                    </button>
+                    <button id="config_tab" class="button" onclick="goto_subtab(1)">
+                        CONFIG
+                    </button>
+                </div>
+
                 <div class="prestige" id="prestige_page">
+                    <div id="amp_block">
+                        <p id="amp2" class="amp2">
+                            1
+                        </p>
+                        <p id="amp_text" class="amp_text">
+                            AMP
+                        </p>
+                    </div>
+                    <p id="amp_boost" class="amp_text">
+                        creating 1.00x EXP production
+                    </p>
+
+                    <div id="pp_block">
+                        <p id="pp2" class="pp">
+                            0
+                        </p>
+                        <p id="pp_text2" class="pp_text2">
+                            PP
+                        </p>
+                    </div>
+
+                    <div id="prestige_block">
+                        <button id="prestige_button" onclick="prestige()">
+                            PRESTIGE!
+                        </button>
+                        <div id="prestige_details">
+                            <p id="amp_up2" class="prestige_text">
+                                +1 AMP
+                            </p>
+                            <p id="pp_up2" class="prestige_text">
+                                +1 PP
+                            </p>
+                            <p id="pp_next" class="prestige_text">
+                                (Next PP at LVL 69)
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p_upgrades" id="p_upgrades_page">
+                    <div id="pp_options">
+                        <div class="option" id="hidden">
+                            <p id="hidden_text" class="option_text">
+                                PP Upgrades
+                            </p>
+                            <button id="hidden_button" class="option_button small" onclick="pp_hidden()">
+                                SHOW ALL
+                            </button>
+                        </div>
+                        <div class="option" id="pp_bar">
+                            <p id="pp_bar_text" class="option_text">
+                                PP Progress Bar
+                            </p>
+                            <button id="pp_bar_button" class="option_button small" onclick="pp_bar()">
+                                DISABLED
+                            </button>
+                        </div>
+                        <div class="option" id="respec">
+                            <button id="respec_button" onclick="respec()">
+                                RESPEC!
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p_config" id="p_config_page">
                     <div id="auto_config">
                         <p class="auto_header">
                             Auto-Prestige Configuration
                         </p>
+                        <div id="auto_enabled">
+                            <p class="goal_text">
+                                Automation:
+                            </p>
+                            <button id="auto_toggle" class="button" onclick="pr_toggle()">
+                                DISABLED
+                            </button>
+                        </div>
                         <div id="auto_mode">
                             <p class="goal_text">
                                 Auto-Prestige Mode:
@@ -310,6 +420,9 @@
                             </p>
                             <input class="goal_input" id="time_input" type="number" value="0" step="0.01" min="0">
                         </div>
+                        <p id="amp_eff" class="goal_text">
+                            AMP Efficiency: ???
+                        </p>
                     </div>
                     <div id="smart_config">
                         <p class="auto_header">
@@ -323,6 +436,9 @@
                                 DISABLED
                             </button>
                         </div>
+                        <p id="smart_time" class="goal_text">
+                            Current Mode Time: 0.00s
+                        </p>
                         <div id="smart_peak">
                             <p class="goal_text">
                                 Time to wait in Peak mode (in seconds):
@@ -380,29 +496,18 @@
                             </button>
                         </div>
                     </div>
-                    <div id="pp_options">
-                        <div class="option" id="hidden">
-                            <p id="hidden_text" class="option_text">
-                                PP Upgrades
-                            </p>
-                            <button id="hidden_button" class="option_button small" onclick="pp_hidden()">
-                                SHOW ALL
-                            </button>
-                        </div>
-                        <div class="option" id="pp_bar">
-                            <p id="pp_bar_text" class="option_text">
-                                PP Progress Bar
-                            </p>
-                            <button id="pp_bar_button" class="option_button small" onclick="pp_bar()">
-                                DISABLED
-                            </button>
-                        </div>
-                        <div class="option" id="respec">
-                            <button id="respec_button" onclick="respec()">
-                                RESPEC!
-                            </button>
-                        </div>
-                    </div>
+                </div>
+
+                <div id="reboot_tabs" class="menu">
+                    <button id="generator_tab" class="button" onclick="goto_subtab(0)">
+                        GENERATOR
+                    </button>
+                    <button id="challenges_tab" class="button" onclick="goto_subtab(1)">
+                        CHALLENGES
+                    </button>
+                    <button id="reactor_tab" class="button" onclick="goto_subtab(2)">
+                        REACTOR
+                    </button>
                 </div>
 
                 <div id="reboot_page">
@@ -418,6 +523,16 @@
                         <p id="gen_boost" class="watts_text">
                             producing 1x AMP gain
                         </p>
+
+                        <div id="hydrogen_block1" class="hydrogen_block">
+                            <p id="hydrogen1" class="hydrogen">
+                                0.00
+                            </p>
+                            <p id="hydrogen_text1" class="hydrogen_text">
+                                g hydrogen
+                            </p>
+                        </div>
+
                         <div id="reboot_block">
                             <div id="generator_requirements">
                                 <p class="perk_name">
@@ -434,16 +549,22 @@
                                 <button id="reboot_button" class="no_reboot_power" onclick="reboot()">
                                     ACTIVATE!
                                 </button>
-                                <p id="watts_plus" class="reboot_text">
-                                    +1 watt
-                                </p>
+                                <div>
+                                    <p id="watts_plus" class="reboot_text">
+                                        +1 watt
+                                    </p>
+                                    <p id="hydrogen_plus" class="reboot_text">
+                                        +1.00 g hydrogen
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
+
                     <div id="autorb_block">
                         <div id="autorb_config">
                             <p class="perk_name">
-                                Auto-Reboot Configuration:
+                                Auto-Reboot Configuration
                             </p>
                             <div id="autorb_enabled">
                                 <p class="goal_text">
@@ -453,11 +574,28 @@
                                     DISABLED
                                 </button>
                             </div>
+                            <div id="autorb_mode">
+                                <p class="goal_text">
+                                    Auto-Reboot Mode:
+                                </p>
+                                <button id="watts_mode" class="button mode_active" onclick="autorb_switch(0)">
+                                    WATTS
+                                </button>
+                                <button id="time_mode2" class="button" onclick="autorb_switch(1)">
+                                    TIME
+                                </button>
+                            </div>
                             <div id="auto_watts">
                                 <p class="goal_text">
                                     Auto-Reboot Watts:
                                 </p>
                                 <input class="goal_input" id="watts_input" type="number" value="1" min="1">
+                            </div>
+                            <div id="auto_time2">
+                                <p class="goal_text">
+                                    Auto-Reboot Time (in seconds):
+                                </p>
+                                <input class="goal_input" id="time_input2" type="number" value="0.8" step="0.01" min="0">
                             </div>
                             <div id="pendingrb_enabled">
                                 <p class="goal_text">
@@ -467,11 +605,288 @@
                                     NO
                                 </button>
                             </div>
+                            <div id="auto_push">
+                                <p class="goal_text">
+                                    Begin Push Time (in seconds):
+                                </p>
+                                <input class="goal_input" id="push_input" type="number" value="60" step="0.01" min="0">
+                            </div>
+                            <p id="watts_eff" class="goal_text">
+                                Watt Efficiency: ???
+                            </p>
                         </div>
                     </div>
 
                     <p id="gen_perks_text">
                         GENERATOR PERKS
+                    </p>
+                </div>
+
+                <div id="challenges_page">
+                    <p id="challenge_header">
+                        Entering a challenge will attempt to Reboot, and will reset without giving watts if you cannot
+                        <br>To complete a challenge you must Reboot with the required amount of spare PP
+                        <br><br>
+                        Total EXP boost from all challenges: 1.00x
+                    </p>
+
+                    <div id="exit_center">
+                        <button id="exit_button" class="button" onclick="exit_challenge()">
+                            EXIT CHALLENGE
+                        </button>
+                    </div>
+                    <div id="challenge_panel"></div>
+                    <p id="challenge_footer">
+                        Get all 108 challenge completions to unlock a new prestige layer...
+                    </p>
+                </div>
+
+                <div id="reactor_page">
+                    <div id="helium_block">
+                        <p id="helium" class="helium">
+                            0.00
+                        </p>
+                        <p id="helium_text" class="helium_text">
+                            mg helium
+                        </p>
+                    </div>
+                    <p id="helium_boost" class="helium_text">
+                        creating 1.00x EXP production
+                    </p>
+                    <p id="helium_rate" class="helium_text">
+                        +0.00 mg helium/sec
+                    </p>
+
+                    <div id="hydrogen_block2" class="hydrogen_block">
+                        <p id="hydrogen2" class="hydrogen">
+                            0.00
+                        </p>
+                        <p id="hydrogen_text2" class="hydrogen_text">
+                            g hydrogen
+                        </p>
+                    </div>
+
+                    <div id="autohy_block">
+                        <div id="autohy_config">
+                            <p class="core_id">
+                                Auto-Reactor Configuration
+                            </p>
+                            <div id="autohy_enabled">
+                                <p class="goal_text">
+                                    Automation:
+                                </p>
+                                <button id="autohy_toggle" class="button" onclick="hy_toggle()">
+                                    DISABLED
+                                </button>
+                            </div>
+                            <div id="autohy_portion">
+                                <p class="goal_text">
+                                    Hydrogen Savings Proportion:
+                                </p>
+                                <input class="goal_input" id="portion_input" type="number" value="0.5" step="0.01" min="0" max="1">
+                            </div>
+                            <div id="autohy_importance">
+                                <p class="goal_text">
+                                    Deuterium Importance:
+                                </p>
+                                <input class="goal_input" id="importance_input" type="number" value="1" step="0.01" min="0.01" max="100">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="core_page">
+                        <p id="reactor_text">
+                            NUCLEAR REACTOR CORES
+                        </p>
+                        <div id="max_buttons">
+                            <button id="reactor_buy_max" class="button reactor_button" onclick="max_toggle()">
+                                BUY ONE
+                            </button>
+                            <button id="reactor_max_all" class="button reactor_button" onclick="max_all()">
+                                MAX ALL
+                            </button>
+                            <button id="reactor_max_half" class="button reactor_button" onclick="max_half()">
+                                MAX HALF
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="power_supply" class="reactor_core">
+                        <div class="core_text">
+                            <p class="core_id">
+                                Deuterium Power
+                            </p>
+                            <p id="supply_gain" class="core_power">
+                                1x hydrogen gains
+                            </p>
+                        </div>
+                        <button id="supply_button" class="core_button core_locked" onclick="
+                            if (game.hydrogen >= game.supply_price) {
+                                game.hydrogen -= game.supply_price
+                                game.budget -= game.supply_price
+                                if (game.budget < 0) game.budget = 0
+                                game.supply_level++
+                                game.supply_price *= 5
+                            }">
+                            -16.0 g hydrogen
+                        </button>
+                    </div>
+                </div>                
+
+                <div id="quantum_tabs" class="menu">
+                    <button id="prism_tab" class="button" onclick="goto_subtab(0)">
+                        PRISM
+                    </button>
+                    <button id="gravity_tab" class="button" onclick="goto_subtab(1)">
+                        GRAVITY WELL
+                    </button>
+                </div>
+
+                <div id="quantum_page">
+                    <div id="photons_block">
+                        <p id="photons" class="photons">
+                            0
+                        </p>
+                        <p id="photons_text" class="photons_text">
+                            photons
+                        </p>
+                    </div>
+                </div>
+
+                <div id="prism_page">
+                    <div id="quantize_block">
+                        <button id="quantize_button" class="lit" onclick="quantize()">
+                            QUANTIZE!
+                        </button>
+                        <div id="quantize_details">
+                            <p id="quantize_req" class="quantize_text">
+                                108 challenge completions required
+                            </p>
+                            <p id="photons_up" class="quantize_text">
+                                +0 photons
+                            </p>
+                        </div>
+                    </div>
+                    <p id="quantize_footer">
+                        Photons gained are based on your Highest Level (Current Iteration)
+                        <br>They don't do anything by themselves, and are only for spending
+                    </p>
+
+                    <div id="autoqu_block">
+                        <div id="autoqu_config">
+                            <p class="qu_name">
+                                Auto-Quantize Configuration
+                            </p>
+                            <div id="autoqu_enabled">
+                                <p class="goal_text">
+                                    Automation:
+                                </p>
+                                <button id="autoqu_toggle" class="button" onclick="qu_toggle()">
+                                    DISABLED
+                                </button>
+                            </div>
+                            <div id="autoqu_mode">
+                                <p class="goal_text">
+                                    Auto-Quantize Mode:
+                                </p>
+                                <button id="photons_mode" class="button mode_active" onclick="autoqu_switch(0)">
+                                    PHOTONS
+                                </button>
+                                <button id="time_mode3" class="button" onclick="autoqu_switch(1)">
+                                    TIME
+                                </button>
+                            </div>
+                            <div id="auto_photons">
+                                <p class="goal_text">
+                                    Auto-Quantize Photons:
+                                </p>
+                                <input class="goal_input" id="photons_input" type="number" value="1" min="1">
+                            </div>
+                            <div id="auto_time3">
+                                <p class="goal_text">
+                                    Auto-Quantize Time (in seconds):
+                                </p>
+                                <input class="goal_input" id="time_input3" type="number" value="60" step="0.01" min="0">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="prism_block">
+                        <div id="prism_level">
+                            <p id="prism_lvl_text" class="quantize_text">
+                                Prism LVL
+                            </p>
+                            <p id="prism_lvl_num">
+                                0
+                            </p>
+                        </div>
+                        <canvas id="prism" width="500" height="500"></canvas>
+                        <p id="prism_boost" class="quantize_text">
+                            1x watt gain boost
+                        </p>
+                    </div>
+                    <div id="small_prism_block">
+                        <p id="prism_level2" class="quantize_text">
+                            Prism LVL 0
+                        </p>
+                        <p id="prism_boost2" class="quantize_text">
+                            1x watt gain boost
+                        </p>
+                    </div>
+                    <p id="prism_upgrade" class="quantize_text">
+                        Upgrade Prism LVL
+                    </p>
+                    <div id="prism_button_center">
+                        <button id="prism_button" class="unlit" onclick="upgrade_prism()">
+                            -5 photons
+                        </button>
+                    </div>
+
+                    <p id="quantum_upgrades_text">
+                        QUANTUM UPGRADES
+                    </p>
+                </div>
+
+                <div id="gravity_page">
+                    <div id="dark_matter_block">
+                        <p id="dark_matter" class="dark_matter">
+                            1.00
+                        </p>
+                        <p id="dark_matter_text" class="dark_matter_text">
+                            kg dark matter
+                        </p>
+                    </div>
+                    <p id="dark_matter_boost" class="dark_matter_text">
+                        creating 1.00x EXP production
+                    </p>
+
+                    <div id="gravity_upgrades">
+                        <div id="interval_upgrade">
+                            <p id="interval_text" class="dark_matter_text">
+                                Growth Interval
+                                <br>2.00 seconds
+                            </p>
+                            <div id="interval_button_center">
+                                <button id="interval_button" class="unlit" onclick="upgrade_interval()">
+                                    -1.000e15 photons
+                                </button>
+                            </div>
+                        </div>
+                        <div id="growth_upgrade">
+                            <p id="growth_text" class="dark_matter_text">
+                                Growth Factor
+                                <br>1.00x
+                            </p>
+                            <div id="growth_button_center">
+                                <button id="growth_button" class="unlit" onclick="upgrade_growth()">
+                                    -1.000e13 photons
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p id="dark_upgrades_text">
+                        DARK UPGRADES
                     </p>
                 </div>
 
@@ -489,6 +904,14 @@
                             Highest Level:
                         </p>
                         <p id="highest_level_stat" class="stat_right">
+                            -
+                        </p>
+                    </div>
+                    <div id="highest_level_ci" class="stat_item">
+                        <p id="highest_level_ci_name" class="stat_left">
+                            Highest Level (Current Iteration):
+                        </p>
+                        <p id="highest_level_ci_stat" class="stat_right">
                             -
                         </p>
                     </div>
@@ -521,6 +944,14 @@
                             Total EXP (Current Reboot):
                         </p>
                         <p id="total_exp_cr_stat" class="stat_right">
+                            -
+                        </p>
+                    </div>
+                    <div id="total_exp_ci" class="stat_item">
+                        <p id="total_exp_ci_name" class="stat_left">
+                            Total EXP (Current Iteration):
+                        </p>
+                        <p id="total_exp_ci_stat" class="stat_right">
                             -
                         </p>
                     </div>
@@ -596,6 +1027,14 @@
                             <br>-
                         </p>
                     </div>
+                    <div id="total_clicks_ci" class="stat_item">
+                        <p id="total_clicks_ci_name" class="stat_left">
+                            <br>Total Clicks (Current Iteration):
+                        </p>
+                        <p id="total_clicks_ci_stat" class="stat_right">
+                            <br>-
+                        </p>
+                    </div>
                     <div id="total_clicks_at" class="stat_item">
                         <p id="total_clicks_at_name" class="stat_left">
                             Total Clicks (All Time):
@@ -652,6 +1091,30 @@
                             -
                         </p>
                     </div>
+                    <div id="current_hydrogen" class="stat_item">
+                        <p id="current_hydrogen_name" class="stat_left">
+                            Current Hydrogen:
+                        </p>
+                        <p id="current_hydrogen_stat" class="stat_right">
+                            -
+                        </p>
+                    </div>
+                    <div id="total_iterations" class="stat_item">
+                        <p id="total_iterations_name" class="stat_left">
+                            <br>Total Quantum Iterations:
+                        </p>
+                        <p id="total_iterations_stat" class="stat_right">
+                            <br>-
+                        </p>
+                    </div>
+                    <div id="current_photons" class="stat_item">
+                        <p id="current_photons_name" class="stat_left">
+                            Current Photons:
+                        </p>
+                        <p id="current_photons_stat" class="stat_right">
+                            -
+                        </p>
+                    </div>
                     <div id="time_played_cp" class="stat_item">
                         <p id="time_played_cp_name" class="stat_left">
                             <br>Time Played (Current Prestige):
@@ -681,6 +1144,22 @@
                             Fastest Reboot:
                         </p>
                         <p id="fastest_reboot_stat" class="stat_right">
+                            -
+                        </p>
+                    </div>
+                    <div id="time_played_ci" class="stat_item">
+                        <p id="time_played_ci_name" class="stat_left">
+                            Time Played (Current Iteration):
+                        </p>
+                        <p id="time_played_ci_stat" class="stat_right">
+                            -
+                        </p>
+                    </div>
+                    <div id="fastest_quantize" class="stat_item">
+                        <p id="fastest_quantize_name" class="stat_left">
+                            Fastest Quantum Iteration:
+                        </p>
+                        <p id="fastest_quantize_stat" class="stat_right">
                             -
                         </p>
                     </div>
@@ -820,6 +1299,14 @@
                             LONG
                         </button>
                     </div>
+                    <div class="option">
+                        <p id="switchpoint_text" class="option_text">
+                            Switchpoint
+                        </p>
+                        <button id="switchpoint_button" class="option_button small" onclick="switchpoint()">
+                            MILLION
+                        </button>
+                    </div>
                     <div class="option" id="hotkeys">
                         <p id="hotkeys_text" class="option_text">
                             Hotkeys
@@ -829,6 +1316,46 @@
                         </button>
                         <button id="hotkeys_reset_button" class="option_button small" onclick="reset_hotkeys()">
                             RESET HOTKEYS
+                        </button>
+                    </div>
+                    <div class="option" id="reboot_confirm">
+                        <p id="confirm_text" class="option_text">
+                            Reboot Confirmation
+                        </p>
+                        <button id="confirm_button" class="option_button small" onclick="confirmation()">
+                            ENABLED
+                        </button>
+                    </div>
+                    <div class="option" id="challenge_confirm">
+                        <p id="ch_confirm_text" class="option_text">
+                            Challenge Confirmation
+                        </p>
+                        <button id="ch_confirm_button" class="option_button small" onclick="challenge_confirmation()">
+                            ENABLED
+                        </button>
+                    </div>
+                    <div class="option" id="quantum_confirm">
+                        <p id="qu_confirm_text" class="option_text">
+                            Quantize Confirmation
+                        </p>
+                        <button id="qu_confirm_button" class="option_button small" onclick="quantum_confirmation()">
+                            ENABLED
+                        </button>
+                    </div>
+                    <div class="option" id="priority_layer">
+                        <p id="layer_text" class="option_text">
+                            Priority Reset Layer
+                        </p>
+                        <button id="layer_button" class="option_button small" onclick="priority_layer()">
+                            PRESTIGE
+                        </button>
+                    </div>
+                    <div class="option">
+                        <p id="hints_text" class="option_text">
+                            Hidden Achievement Hints
+                        </p>
+                        <button id="hints_button" class="option_button small" onclick="hints()">
+                            DISABLED
                         </button>
                     </div>
                     <div class="option">
@@ -851,11 +1378,22 @@
                         </p>
                         <input class="goal_input" id="hue_input" type="number" value="0" min="0" max="359">
                     </div>
-                    <div class="option" id="reboot_confirm">
-                        <p id="confirm_text" class="option_text">
-                            Reboot Confirmation
+                    <div class="option">
+                        <p id="refresh_text" class="option_text">
+                            Visual Update Rate
                         </p>
-                        <button id="confirm_button" class="option_button small" onclick="confirmation()">
+                        <div>
+                            <input class="goal_input" id="refresh_input" type="number" value="30" min="2" max="30">
+                            <p id="hertz_text" class="option_text">
+                                Hz
+                            </p>
+                        </div>
+                    </div>
+                    <div class="option" id="question">
+                        <p id="question_text" class="option_text">
+                            ???
+                        </p>
+                        <button id="question_button" class="option_button small" onclick="question()">
                             ENABLED
                         </button>
                     </div>
@@ -871,10 +1409,13 @@
                 </div>
 
                 <p id="version" class="info">
-                    <br><br><br>EXP Simulator v2.2.103 (Beta)<br>Made by Zakuro
+                    <br><br><br>EXP Simulator v2.3.101<br>Made by Zakuro
                 </p>
                 <a href="changelog.html" target="_blank" class="info link">
                     Changelog
+                </a>
+                <a href="https://zakuro98.github.io/EXP-Simulator-Beta/" target="_blank" class="info link">
+                    Beta
                 </a>
                 <a href="https://discord.gg/fuQSBkYYqH" target="_blank" class="info link">
                     Discord
