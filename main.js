@@ -1398,7 +1398,7 @@ function tick() {
             "\n\n\nEXP Simulator v?.?.???\nMade by Zakuro"
     } else {
         document.getElementById("version").innerText =
-            "\n\n\nEXP Simulator v2.3.101\nMade by Zakuro"
+            "\n\n\nEXP Simulator v2.3.102\nMade by Zakuro"
     }
 }
 
