@@ -1056,7 +1056,7 @@ function get_level(xp) {
                 iterations++
             }
             return Math.floor(guess)
-        } else if (xp < get_exp(965812)) {
+        } else if (xp < get_exp(965813)) {
             let guess = 965813
             let iterations = 0
             while (
@@ -1065,12 +1065,14 @@ function get_level(xp) {
             ) {
                 guess =
                     (xp - get_exp(guess - 1)) /
-                        (aj * Math.E ** (aj * (guess + ah))) +
+                        (ai +
+                            (aj * (guess - 1) + 1) *
+                                Math.E ** (aj * (guess + ak))) +
                     guess
                 iterations++
             }
             return Math.floor(guess)
-        } else if (xp >= get_exp(965812)) {
+        } else if (xp >= get_exp(965813)) {
             return 965813
         }
     }
@@ -2867,7 +2869,7 @@ class challenge {
         0,
         0,
         63640000,
-        17225000,
+        11225000,
         0
     )
     new challenge(
@@ -2887,7 +2889,7 @@ class challenge {
         100000,
         -5000,
         9320000,
-        250000,
+        210000,
         20000
     )
     new challenge(
