@@ -6,35 +6,44 @@ function notation() {
         !game.question
     )
         game.notation += 1
-    if (game.notation >= 9) game.notation = 0
+    if (game.notation >= 12) game.notation = 0
     pp_update()
     switch (game.notation) {
         case 0:
-            document.getElementById("notation_button").innerText = "LONG"
+            document.getElementById("notation_button").innerHTML = "LONG"
             break
         case 1:
-            document.getElementById("notation_button").innerText = "STANDARD"
+            document.getElementById("notation_button").innerHTML = "STANDARD"
             break
         case 2:
-            document.getElementById("notation_button").innerText = "SCIENTIFIC"
+            document.getElementById("notation_button").innerHTML = "SCIENTIFIC"
             break
         case 3:
-            document.getElementById("notation_button").innerText = "ENGINEERING"
+            document.getElementById("notation_button").innerHTML = "ENGINEERING"
             break
         case 4:
-            document.getElementById("notation_button").innerText = "CONDENSED"
+            document.getElementById("notation_button").innerHTML = "CONDENSED"
             break
         case 5:
-            document.getElementById("notation_button").innerText = "LOGARITHM"
+            document.getElementById("notation_button").innerHTML = "LOGARITHM"
             break
         case 6:
-            document.getElementById("notation_button").innerText = "LETTERS"
+            document.getElementById("notation_button").innerHTML = "LETTERS"
             break
         case 7:
-            document.getElementById("notation_button").innerText = "CANCER"
+            document.getElementById("notation_button").innerHTML = "CANCER"
             break
         case 8:
-            document.getElementById("notation_button").innerText = "???"
+            document.getElementById("notation_button").innerHTML = "???"
+            break
+        case 9:
+            document.getElementById("notation_button").innerHTML = "INFINITY"
+            break
+        case 10:
+            document.getElementById("notation_button").innerHTML = "ROMAN"
+            break
+        case 11:
+            document.getElementById("notation_button").innerHTML = "BASE64"
             break
     }
     increment(0)
@@ -42,25 +51,25 @@ function notation() {
     challenge_update()
     reactor_update()
     if (game.oc_state === 2)
-        document.getElementById("oc_state").innerText =
+        document.getElementById("oc_state").innerHTML =
             "Boosting " + format_num(game.exp_oc) + "x"
     pp_upgrade.upgrades[24].desc =
-        "Unautomated clicks are boosted a further +32% for every Autoclicker tier\n(Currently: " +
+        "Unautomated clicks are boosted a further +32% for every Autoclicker tier<br>(Currently: " +
         format_eff(16 + game.cps * 0.16) +
         "x)"
-    pp_map.get(pp_upgrade.upgrades[24]).querySelector(".pp_desc").innerText =
+    pp_map.get(pp_upgrade.upgrades[24]).querySelector(".pp_desc").innerHTML =
         pp_upgrade.upgrades[24].desc
     pp_upgrade.upgrades[27].desc =
-        "EXP production is boosted based on how many times you have Prestiged\n(Currently: " +
+        "EXP production is boosted based on how many times you have Prestiged<br>(Currently: " +
         format_eff(1 + (game.prestige / 1000) ** (1 / 2)) +
         "x)"
-    pp_map.get(pp_upgrade.upgrades[27]).querySelector(".pp_desc").innerText =
+    pp_map.get(pp_upgrade.upgrades[27]).querySelector(".pp_desc").innerHTML =
         pp_upgrade.upgrades[27].desc
     pp_upgrade.upgrades[30].desc =
-        "EXP production is boosted based on your highest level\n(Currently: " +
+        "EXP production is boosted based on your highest level<br>(Currently: " +
         format_eff(1 + game.highest_level / 400) +
         "x)"
-    pp_map.get(pp_upgrade.upgrades[30]).querySelector(".pp_desc").innerText =
+    pp_map.get(pp_upgrade.upgrades[30]).querySelector(".pp_desc").innerHTML =
         pp_upgrade.upgrades[30].desc
 }
 
@@ -70,10 +79,10 @@ function switchpoint() {
     if (game.switchpoint >= 2) game.switchpoint = 0
     switch (game.switchpoint) {
         case 0:
-            document.getElementById("switchpoint_button").innerText = "MILLION"
+            document.getElementById("switchpoint_button").innerHTML = "MILLION"
             break
         case 1:
-            document.getElementById("switchpoint_button").innerText = "BILLION"
+            document.getElementById("switchpoint_button").innerHTML = "BILLION"
             break
     }
 }
@@ -82,10 +91,10 @@ function switchpoint() {
 function hotkeys() {
     if (game.hotkeys) {
         game.hotkeys = false
-        document.getElementById("hotkeys_button").innerText = "DISABLED"
+        document.getElementById("hotkeys_button").innerHTML = "DISABLED"
     } else {
         game.hotkeys = true
-        document.getElementById("hotkeys_button").innerText = "ENABLED"
+        document.getElementById("hotkeys_button").innerHTML = "ENABLED"
     }
 }
 
@@ -105,15 +114,26 @@ function pp_hidden() {
     pp_update()
     switch (game.pp_hide) {
         case 0:
-            document.getElementById("hidden_button").innerText = "SHOW ALL"
+            document.getElementById("hidden_button").innerHTML = "SHOW ALL"
             break
         case 1:
-            document.getElementById("hidden_button").innerText =
+            document.getElementById("hidden_button").innerHTML =
                 "SHOW IMPORTANT"
             break
         case 2:
-            document.getElementById("hidden_button").innerText = "HIDE BOUGHT"
+            document.getElementById("hidden_button").innerHTML = "HIDE BOUGHT"
             break
+    }
+}
+
+//hidden completed perks toggle
+function perks_hidden() {
+    if (game.perks_hidden) {
+        game.perks_hidden = false
+        document.getElementById("perks_hidden_button").innerHTML = "DISABLED"
+    } else {
+        game.perks_hidden = true
+        document.getElementById("perks_hidden_button").innerHTML = "ENABLED"
     }
 }
 
@@ -121,11 +141,11 @@ function pp_hidden() {
 function pp_bar() {
     if (game.pp_progress) {
         game.pp_progress = false
-        document.getElementById("pp_bar_button").innerText = "DISABLED"
+        document.getElementById("pp_bar_button").innerHTML = "DISABLED"
         document.getElementById("pp_back").style.display = "none"
     } else {
         game.pp_progress = true
-        document.getElementById("pp_bar_button").innerText = "ENABLED"
+        document.getElementById("pp_bar_button").innerHTML = "ENABLED"
         document.getElementById("pp_back").style.display = "block"
     }
 }
@@ -134,7 +154,7 @@ function pp_bar() {
 function epilepsy() {
     if (game.epilepsy) {
         game.epilepsy = false
-        document.getElementById("epilepsy_button").innerText = "ENABLED"
+        document.getElementById("epilepsy_button").innerHTML = "ENABLED"
         document.documentElement.style.setProperty(
             "--button_background",
             "#780e74"
@@ -144,7 +164,7 @@ function epilepsy() {
         document.documentElement.style.setProperty("--enter_shadow", "#ff0000")
     } else {
         game.epilepsy = true
-        document.getElementById("epilepsy_button").innerText = "DISABLED"
+        document.getElementById("epilepsy_button").innerHTML = "DISABLED"
         document.documentElement.style.setProperty(
             "--button_background",
             "white"
@@ -161,15 +181,15 @@ function level_color() {
     if (game.color_mode >= 3) game.color_mode = 0
     switch (game.color_mode) {
         case 0:
-            document.getElementById("color_button").innerText = "AUTOMATIC"
+            document.getElementById("color_button").innerHTML = "AUTOMATIC"
             document.getElementById("custom_hue_text").style.display = "none"
             document.getElementById("hue_input").style.display = "none"
             break
         case 1:
-            document.getElementById("color_button").innerText = "RAINBOW"
+            document.getElementById("color_button").innerHTML = "RAINBOW"
             break
         case 2:
-            document.getElementById("color_button").innerText = "CUSTOM"
+            document.getElementById("color_button").innerHTML = "CUSTOM"
             document.getElementById("custom_hue_text").style.display = "block"
             document.getElementById("hue_input").style.display = "block"
             break
@@ -180,15 +200,15 @@ function level_color() {
 function confirmation() {
     if (game.confirmation) {
         game.confirmation = false
-        document.getElementById("confirm_button").innerText = "DISABLED"
+        document.getElementById("confirm_button").innerHTML = "DISABLED"
     } else {
         game.confirmation = true
         game.autorb_toggle = false
-        document.getElementById("autorb_toggle").innerText = "DISABLED"
+        document.getElementById("autorb_toggle").innerHTML = "DISABLED"
         document.getElementById("autorb_toggle").style.color = "#ff0000"
-        document.getElementById("watt_auto").innerText = "OFF"
+        document.getElementById("watt_auto").innerHTML = "OFF"
         document.getElementById("watt_auto").style.color = "#ff0000"
-        document.getElementById("confirm_button").innerText = "ENABLED"
+        document.getElementById("confirm_button").innerHTML = "ENABLED"
     }
 }
 
@@ -196,10 +216,10 @@ function confirmation() {
 function challenge_confirmation() {
     if (game.challenge_confirmation) {
         game.challenge_confirmation = false
-        document.getElementById("ch_confirm_button").innerText = "DISABLED"
+        document.getElementById("ch_confirm_button").innerHTML = "DISABLED"
     } else {
         game.challenge_confirmation = true
-        document.getElementById("ch_confirm_button").innerText = "ENABLED"
+        document.getElementById("ch_confirm_button").innerHTML = "ENABLED"
     }
 }
 
@@ -207,13 +227,13 @@ function challenge_confirmation() {
 function quantum_confirmation() {
     if (game.quantum_confirmation) {
         game.quantum_confirmation = false
-        document.getElementById("qu_confirm_button").innerText = "DISABLED"
+        document.getElementById("qu_confirm_button").innerHTML = "DISABLED"
     } else {
         game.quantum_confirmation = true
         game.autoqu_toggle = false
-        document.getElementById("autoqu_toggle").innerText = "DISABLED"
+        document.getElementById("autoqu_toggle").innerHTML = "DISABLED"
         document.getElementById("autoqu_toggle").style.color = "#ff0000"
-        document.getElementById("qu_confirm_button").innerText = "ENABLED"
+        document.getElementById("qu_confirm_button").innerHTML = "ENABLED"
     }
 }
 
@@ -221,10 +241,10 @@ function quantum_confirmation() {
 function question() {
     if (game.question) {
         game.question = false
-        document.getElementById("question_button").innerText = "DISABLED"
+        document.getElementById("question_button").innerHTML = "DISABLED"
     } else {
         game.question = true
-        document.getElementById("question_button").innerText = "ENABLED"
+        document.getElementById("question_button").innerHTML = "ENABLED"
     }
 }
 
@@ -238,13 +258,13 @@ function priority_layer() {
     }
     switch (game.priority_layer) {
         case 0:
-            document.getElementById("layer_button").innerText = "NONE"
+            document.getElementById("layer_button").innerHTML = "NONE"
             break
         case 1:
-            document.getElementById("layer_button").innerText = "PRESTIGE"
+            document.getElementById("layer_button").innerHTML = "PRESTIGE"
             break
         case 2:
-            document.getElementById("layer_button").innerText = "REBOOT"
+            document.getElementById("layer_button").innerHTML = "REBOOT"
             break
     }
 }
@@ -253,10 +273,10 @@ function priority_layer() {
 function hints() {
     if (game.hints) {
         game.hints = false
-        document.getElementById("hints_button").innerText = "DISABLED"
+        document.getElementById("hints_button").innerHTML = "DISABLED"
     } else {
         game.hints = true
-        document.getElementById("hints_button").innerText = "ENABLED"
+        document.getElementById("hints_button").innerHTML = "ENABLED"
     }
 }
 
@@ -281,9 +301,11 @@ function goto_tab(id) {
     document.getElementById("quantum_page").style.display = "none"
     document.getElementById("prism_page").style.display = "none"
     document.getElementById("gravity_page").style.display = "none"
+    document.getElementById("omega_page").style.display = "none"
     document.getElementById("statistics_page").style.display = "none"
     document.getElementById("achievements_page").style.display = "none"
     document.getElementById("settings_page").style.display = "none"
+    document.getElementById("the_end_page").style.display = "none"
 
     document.getElementById("prestige_tabs").style.display = "none"
     document.getElementById("reboot_tabs").style.display = "none"
@@ -320,6 +342,8 @@ function goto_tab(id) {
                 document.getElementById("prism_page").style.display = "block"
             if (game.subtab[2] === 1)
                 document.getElementById("gravity_page").style.display = "block"
+            if (game.subtab[2] === 2)
+                document.getElementById("omega_page").style.display = "block"
             if (game.qu_bought[7])
                 document.getElementById("quantum_tabs").style.display = "flex"
             break
@@ -332,6 +356,9 @@ function goto_tab(id) {
             break
         case 7:
             document.getElementById("settings_page").style.display = "flex"
+            break
+        case 8:
+            document.getElementById("the_end_page").style.display = "block"
             break
     }
 }
@@ -377,6 +404,7 @@ function goto_subtab(id) {
 
         document.getElementById("prism_page").style.display = "none"
         document.getElementById("gravity_page").style.display = "none"
+        document.getElementById("omega_page").style.display = "none"
 
         switch (id) {
             case 0:
@@ -384,6 +412,9 @@ function goto_subtab(id) {
                 break
             case 1:
                 document.getElementById("gravity_page").style.display = "block"
+                break
+            case 2:
+                document.getElementById("omega_page").style.display = "block"
                 break
         }
     }
@@ -420,24 +451,19 @@ function change_page(dir) {
             document.getElementById("page_right2").style.display = "inline"
         }
     }
-
-    document.getElementById("page_text1").innerText =
-        "Page " + (game.achiev_page + 1)
-    document.getElementById("page_text2").innerText =
-        "Page " + (game.achiev_page + 1)
 }
 
 //toggling buy one/buy max
 function max_toggle() {
     if (game.buy_max) {
         game.buy_max = false
-        document.getElementById("reactor_buy_max").innerText = "BUY ONE"
+        document.getElementById("reactor_buy_max").innerHTML = "BUY ONE"
         document.getElementById("reactor_buy_max").style.color = "#4db2ff"
         document.getElementById("reactor_buy_max").style.textShadow =
             "0em 0em 0.2em #0091ff"
     } else {
         game.buy_max = true
-        document.getElementById("reactor_buy_max").innerText = "BUY MAX"
+        document.getElementById("reactor_buy_max").innerHTML = "BUY MAX"
         document.getElementById("reactor_buy_max").style.color = "#ffffff"
         document.getElementById("reactor_buy_max").style.textShadow =
             "0em 0em 0.2em #ffffff"
@@ -474,7 +500,7 @@ function max_all() {
                 (core.cores[selection].base_price *
                     (game.core_level[selection] -
                         Math.floor(500000 / 2 ** selection)) **
-                        1) /
+                        1.65) /
                 4
         } else {
             game.core_price[selection] += core.cores[selection].base_price / 4
@@ -533,7 +559,7 @@ function max_half() {
                 (core.cores[selection].base_price *
                     (game.core_level[selection] -
                         Math.floor(500000 / 2 ** selection)) **
-                        1) /
+                        1.65) /
                 4
         } else {
             game.core_price[selection] += core.cores[selection].base_price / 4
