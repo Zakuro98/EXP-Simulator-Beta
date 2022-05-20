@@ -55,10 +55,10 @@ function reset() {
 
     color_update()
 
-    document.getElementById("lvlnum").innerText = format_num(game.level)
-    document.getElementById("exp").innerText =
+    document.getElementById("lvlnum").innerHTML = format_num(game.level)
+    document.getElementById("exp").innerHTML =
         format_num(game.exp) + " / " + format_num(game.goal) + " EXP"
-    document.getElementById("total_exp").innerText =
+    document.getElementById("total_exp").innerHTML =
         format_num(game.total_exp) + " Total EXP"
 
     document.getElementById("progress").style.width = 0 + "%"
@@ -95,9 +95,9 @@ function prestige() {
                 )
                     game.highest_level = game.level
             }
-            document.getElementById("amp").innerText =
+            document.getElementById("amp").innerHTML =
                 format_num(game.amp) + " AMP"
-            document.getElementById("pp").innerText =
+            document.getElementById("pp").innerHTML =
                 format_num(game.pp) + " PP"
 
             for (let i = 4; i > 0; i--) {
@@ -328,9 +328,9 @@ function prestige() {
                     game.completions[3] >= 12)
             )
                 game.highest_level = game.level
-            document.getElementById("amp").innerText =
+            document.getElementById("amp").innerHTML =
                 format_num(game.amp) + " AMP"
-            document.getElementById("pp").innerText =
+            document.getElementById("pp").innerHTML =
                 format_num(game.pp) + " PP"
 
             for (let i = 4; i > 0; i--) {
@@ -564,7 +564,7 @@ function respec() {
         document.getElementById("overclock").style.display = "none"
         document.getElementById("oc_auto").style.display = "none"
         document.getElementById("oc_button").style.display = "none"
-        document.getElementById("oc_state").innerText = "Recharging"
+        document.getElementById("oc_state").innerHTML = "Recharging"
         document.getElementById("oc_timer").style.display = "block"
         document.getElementById("oc_progress").style.background = "#ff2f00"
         set_capacitance(0)
@@ -757,6 +757,8 @@ function reboot() {
 
                     if (game.completions[ch] >= 12 && !game.achievements[90])
                         get_achievement(90)
+                    if (game.completions[ch] >= 20 && !game.achievements[158])
+                        get_achievement(158)
 
                     switch (ch) {
                         case 0:
@@ -833,6 +835,21 @@ function reboot() {
                     )
                         get_achievement(114)
 
+                    if (
+                        !game.achievements[159] &&
+                        game.completions[0] +
+                            game.completions[1] +
+                            game.completions[2] +
+                            game.completions[3] +
+                            game.completions[4] +
+                            game.completions[5] +
+                            game.completions[6] +
+                            game.completions[7] +
+                            game.completions[8] >=
+                            180
+                    )
+                        get_achievement(159)
+
                     if (!game.achievements[92] && game.blind)
                         get_achievement(92)
 
@@ -854,9 +871,11 @@ function reboot() {
             }
 
             game.reboot += 1
-            if (!game.perks[13]) game.watts += game.prism_boost
+            if (!game.perks[13])
+                game.watts += game.prism_boost * game.om_boost[0]
             else {
-                game.watts += get_watts(game.pp) * game.prism_boost
+                game.watts +=
+                    get_watts(game.pp) * game.prism_boost * game.om_boost[0]
                 if (
                     game.perks[22] &&
                     (game.watts >= 98304 || game.dk_bought[5])
@@ -865,31 +884,37 @@ function reboot() {
                         game.hydrogen +=
                             (get_watts(game.pp) / 100) *
                             3 ** game.supply_level *
-                            game.prism_boost
+                            game.prism_boost *
+                            game.om_boost[0]
                         game.budget +=
                             (get_watts(game.pp) / 100) *
                             3 ** game.supply_level *
                             game.prism_boost *
+                            game.om_boost[0] *
                             (1 - game.autohy_portion)
                     } else if (game.perks[25]) {
                         game.hydrogen +=
                             (get_watts(game.pp) / 100) *
                             2.5 ** game.supply_level *
-                            game.prism_boost
+                            game.prism_boost *
+                            game.om_boost[0]
                         game.budget +=
                             (get_watts(game.pp) / 100) *
                             2.5 ** game.supply_level *
                             game.prism_boost *
+                            game.om_boost[0] *
                             (1 - game.autohy_portion)
                     } else {
                         game.hydrogen +=
                             (get_watts(game.pp) / 100) *
                             2 ** game.supply_level *
-                            game.prism_boost
+                            game.prism_boost *
+                            game.om_boost[0]
                         game.budget +=
                             (get_watts(game.pp) / 100) *
                             2 ** game.supply_level *
                             game.prism_boost *
+                            game.om_boost[0] *
                             (1 - game.autohy_portion)
                     }
                 }
@@ -913,7 +938,10 @@ function reboot() {
                     game.watts_eff[i] = game.watts_eff[i - 1]
                 }
                 game.watts_eff[0] =
-                    (get_watts(game.pp) * game.prism_boost * game.tickspeed) /
+                    (get_watts(game.pp) *
+                        game.prism_boost *
+                        game.om_boost[0] *
+                        game.tickspeed) /
                     game.prestige_time
             }
 
@@ -1031,7 +1059,7 @@ function reboot() {
 
             if (!game.perks[2]) game.subtab[0] = 0
 
-            document.getElementById("click").innerText =
+            document.getElementById("click").innerHTML =
                 "+" + format_num(game.amp) + " EXP"
 
             document.getElementById("boost_auto").style.display = "none"
@@ -1058,7 +1086,7 @@ function reboot() {
             document.getElementById("overclock").style.display = "none"
             document.getElementById("oc_auto").style.display = "none"
             document.getElementById("oc_button").style.display = "none"
-            document.getElementById("oc_state").innerText = "Recharging"
+            document.getElementById("oc_state").innerHTML = "Recharging"
             document.getElementById("oc_timer").style.display = "block"
             document.getElementById("oc_progress").style.background = "#ff2f00"
 
@@ -1166,7 +1194,7 @@ function empty_reboot() {
 
     if (!game.perks[2]) game.subtab[0] = 0
 
-    document.getElementById("click").innerText =
+    document.getElementById("click").innerHTML =
         "+" + format_num(game.amp) + " EXP"
 
     document.getElementById("boost_auto").style.display = "none"
@@ -1192,7 +1220,7 @@ function empty_reboot() {
     document.getElementById("overclock").style.display = "none"
     document.getElementById("oc_auto").style.display = "none"
     document.getElementById("oc_button").style.display = "none"
-    document.getElementById("oc_state").innerText = "Recharging"
+    document.getElementById("oc_state").innerHTML = "Recharging"
     document.getElementById("oc_timer").style.display = "block"
     document.getElementById("oc_progress").style.background = "#ff2f00"
 
@@ -1244,14 +1272,18 @@ function quantize() {
     if (game.highest_level > highest_level) highest_level = game.highest_level
     if (game.level > highest_level) highest_level = game.level
 
-    if (total_completions >= 108 && highest_level >= 65536) {
+    let amount = Math.floor(1000000 ** ((highest_level - 65536) / 32768))
+
+    let quantum_requirement = 1
+    if (game.omega_challenge) {
+        quantum_requirement = 300 * 200 ** game.om_completions
+    }
+
+    if (total_completions >= 108 && amount >= quantum_requirement) {
         let confirmed = false
         if (!game.quantum_confirmation) confirmed = true
         else {
             let message = ""
-            let amount = Math.floor(
-                1000000 ** ((highest_level - 65536) / 32768)
-            )
             if (game.quantum < 1) {
                 message =
                     "Are you sure you want to Quantize? This will reset ALL progress up to this point except for Perks and give you "
@@ -1272,6 +1304,10 @@ function quantize() {
             game.photons += Math.floor(
                 1000000 ** ((highest_level - 65536) / 32768)
             )
+            if (!game.omega_challenge)
+                game.prev_photons = Math.floor(
+                    1000000 ** ((highest_level - 65536) / 32768)
+                )
 
             if (!game.achievements[120] && game.quantum >= 1)
                 get_achievement(120)
@@ -1287,6 +1323,10 @@ function quantize() {
                 get_achievement(139)
             if (!game.achievements[140] && game.quantum >= 100)
                 get_achievement(140)
+            if (!game.achievements[160] && game.quantum >= 1000)
+                get_achievement(160)
+
+            if (!game.achievements[168] && game.hps === 0) get_achievement(168)
 
             game.watts = 0
             game.watt_boost = 1
@@ -1307,8 +1347,9 @@ function quantize() {
             game.supply_price = 16
             game.autohy_spent = 0
 
-            game.dark_matter = 1
+            game.dark_matter = new Decimal(1)
             game.dark_matter_boost = 1
+            game.omega_level = 0
 
             if (game.reboot_time < game.fastest_quantize)
                 game.fastest_quantize = game.reboot_time
@@ -1348,6 +1389,16 @@ function quantize() {
 
             if (game.level > game.all_time_highest_level) {
                 game.all_time_highest_level = game.level
+            }
+
+            if (game.omega_challenge) {
+                game.omega_challenge = false
+                game.om_completions++
+
+                if (!game.achievements[165] && game.om_completions >= 1)
+                    get_achievement(165)
+                if (!game.achievements[166] && game.om_completions >= 5)
+                    get_achievement(166)
             }
 
             empty_reboot()
