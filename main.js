@@ -2675,3 +2675,5 @@ let save_loop = window.setInterval(function () {
 console.log(
     "Hey! I see you there in the console...\nI hope you know what you're doing!\nJust don't cheat... OR ELSE"
 )
+
+alert("DISCLAIMER: The Beta link is for voluntary testing of potentially unbalanced new updates ONLY, not for serious playing\nAs such beta saves cannot be carried back to the live version!")
